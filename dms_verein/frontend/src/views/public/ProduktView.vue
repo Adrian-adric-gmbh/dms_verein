@@ -391,7 +391,7 @@ const kpis = [
   { value: '17+', label: 'Funktionsmodule' },
   { value: '100%', label: 'DSGVO-konform' },
   { value: 'PWA', label: 'Mobil ohne App-Store' },
-  { value: 'AES-256', label: 'Chat-Verschlüsselung' },
+  { value: 'AES-128', label: 'Chat-Verschlüsselung' },
 ]
 
 // ─── Module ───────────────────────────────────────────────────────────────────
@@ -432,7 +432,7 @@ const module = [
   },
   {
     id: 'chat',
-    titel: 'Interner Chat (Ende-zu-Ende verschlüsselt)',
+    titel: 'Interner Chat (verschlüsselt gespeichert)',
     icon: MessageSquare,
     farbe: '#0ea5e9',
     beschreibung: 'Ein vollständig in die Plattform integriertes Messaging-System – kein externer Dienst, keine Datenweitergabe. Direkt-Nachrichten und Gruppen-Chats mit Echtzeit-Übertragung.',
@@ -440,7 +440,7 @@ const module = [
       'Direkt-Nachrichten zwischen Mitgliedern',
       'Gruppen-Chats mit eigenem Avatar und Admin-Verwaltung',
       'Fotos & Dateien teilen',
-      'Ende-zu-Ende-Verschlüsselung (AES-256) aller Nachrichten',
+      'Verschlüsselte Speicherung aller Nachrichten (AES-128)',
       'Ungelesen-Badge in der Navigation',
       'Eigene Nachrichten löschen (erscheint auch beim Empfänger als gelöscht)',
       'Nachrichtenverlauf für sich leeren',
@@ -627,7 +627,7 @@ const mobileFeatures = [
 
 // ─── Sicherheit ───────────────────────────────────────────────────────────────
 const sicherheit = [
-  { icon: Lock, titel: 'Ende-zu-Ende Verschlüsselung', text: 'Chat-Nachrichten werden mit AES-256 verschlüsselt. Nur Mitglieder der Konversation können den Inhalt lesen – nicht einmal der Server-Admin.' },
+  { icon: Lock, titel: 'Verschlüsselte Chat-Nachrichten', text: 'Chat-Nachrichten werden verschlüsselt in der Datenbank abgelegt (AES-128, Fernet). Zugriff haben nur die Mitglieder der Konversation. Ver- und Entschlüsselung erfolgen auf dem Server – es ist keine Ende-zu-Ende-Verschlüsselung.' },
   { icon: Server, titel: 'Hosting inklusive – unter Ihrer Domain', text: 'Ich hoste die Software für Sie – unter Ihrer eigenen Vereinsdomain (z. B. mitglieder.ihr-verein.de). Auf Wunsch auch Self-Hosted auf Ihrem eigenen Server.' },
   { icon: Shield, titel: 'DSGVO-konform', text: 'Alle Verarbeitungen entsprechen der DSGVO. Datenschutzerklärung direkt im System hinterlegt. Kein Tracking, keine externen CDNs.' },
 ]
@@ -646,7 +646,7 @@ const tarife = [
 const immerInklusive = [
   'Alle 17+ Module ohne Einschränkung',
   'Mitgliederverwaltung & -portal',
-  'Ende-zu-Ende verschlüsselter Chat',
+  'Chat mit verschlüsselter Speicherung',
   'SEPA-Lastschrift & Rechnungen',
   'Digitale Abstimmungen',
   'Öffentliche Vereinswebsite',

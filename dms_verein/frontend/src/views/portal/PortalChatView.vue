@@ -98,8 +98,8 @@
         <div class="flex items-center gap-2.5 bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3 max-w-xs">
           <Lock :size="16" class="text-emerald-600 shrink-0" />
           <p class="text-xs text-emerald-700 leading-relaxed">
-            Alle Nachrichten sind <strong>Ende-zu-Ende verschlüsselt</strong> (AES-256).
-            Nur Mitglieder können sie lesen.
+            Alle Nachrichten werden <strong>verschlüsselt gespeichert</strong> (AES-128, Fernet).
+            Zugriff haben nur die Mitglieder der Konversation.
           </p>
         </div>
       </div>
@@ -267,7 +267,7 @@
         <!-- Encryption notice -->
         <div class="flex items-center justify-center gap-1.5 py-1 bg-slate-50 border-t border-slate-100 shrink-0">
           <Lock :size="10" class="text-slate-300" />
-          <span class="text-[10px] text-slate-300 select-none">Ende-zu-Ende verschlüsselt · AES-256</span>
+          <span class="text-[10px] text-slate-300 select-none">Verschlüsselt gespeichert · AES-128</span>
         </div>
 
         <!-- Input -->

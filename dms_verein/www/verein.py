@@ -18,7 +18,7 @@ def get_context(context):
     if path.rstrip("/") == "/verein/produkt":
         context.og_title = "DMS Verein – Die digitale Vereinsplattform"
         context.og_description = (
-            "Mitgliederverwaltung, interner Chat (E2E-verschlüsselt), Finanzen, "
+            "Mitgliederverwaltung, interner Chat (verschlüsselt gespeichert), Finanzen, "
             "SEPA-Lastschrift und ein mobiles Mitgliederportal – alles in einer Plattform. "
             "Für Vereine, Feuerwehren und mehr."
         )
