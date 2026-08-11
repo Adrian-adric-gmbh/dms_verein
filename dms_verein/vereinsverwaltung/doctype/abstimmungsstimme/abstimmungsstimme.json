@@ -1,0 +1,16 @@
+{
+  "name": "Abstimmungsstimme",
+  "doctype": "DocType",
+  "module": "Vereinsverwaltung",
+  "autoname": "format:VSTIMME-{####}",
+  "fields": [
+    {"fieldname": "abstimmung", "fieldtype": "Link", "label": "Abstimmung", "options": "Abstimmung", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "mitglied", "fieldtype": "Data", "label": "Mitglied", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "abstimmungsdatum", "fieldtype": "Datetime", "label": "Abgegeben am"},
+    {"fieldname": "stimmen_json", "fieldtype": "Code", "label": "Stimmen (JSON)", "options": "JSON"}
+  ],
+  "permissions": [
+    {"role": "Vereins Admin", "read": 1, "write": 1, "create": 1, "delete": 1},
+    {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1}
+  ]
+}

@@ -1,0 +1,439 @@
+{
+ "creation": "2026-06-24 00:00:00",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "issingle": 1,
+ "module": "Vereinsverwaltung",
+ "name": "Vereins Konfiguration",
+ "field_order": [
+  "tab_allgemein",
+  "vereinsname",
+  "rechtsform",
+  "col1",
+  "gruendungsjahr",
+  "vereinszweck",
+  "sb_adresse",
+  "strasse",
+  "hausnummer",
+  "col2",
+  "plz",
+  "ort",
+  "bundesland",
+  "sb_kontakt",
+  "telefon",
+  "email",
+  "website",
+  "col3",
+  "logo",
+  "tab_rechtlich",
+  "registernummer",
+  "amtsgericht",
+  "col4",
+  "steuernummer",
+  "gemeinnuetzig",
+  "sb_vorstand_vertr",
+  "vertretung_vorstand",
+  "sb_datenschutz",
+  "datenschutzbeauftragter",
+  "datenschutz_email",
+  "col5",
+  "datenschutz_url",
+  "sb_datenschutz_text",
+  "datenschutz_text",
+  "sb_impressum",
+  "impressum_text",
+  "tab_finanzen",
+  "geschaeftsjahr_start",
+  "col6",
+  "bankname",
+  "iban",
+  "bic",
+  "col7",
+  "konto_inhaber",
+  "sb_beitrag",
+  "beitrag_faelligkeit",
+  "beitrag_intervall",
+  "col8",
+  "beitrag_hinweis",
+  "sb_sepa",
+  "sepa_glaeubiger_id",
+  "sepa_mandatsreferenz_prefix",
+  "tab_design",
+  "primaerfarbe",
+  "col9",
+  "sekundaerfarbe",
+  "vereinsmotto",
+  "willkommenstext",
+  "sb_externe_dienste",
+  "google_maps_aktiv",
+  "google_maps_key",
+  "sb_demo",
+  "demo_daten_aktiv",
+  "demo_daten_erstellt",
+  "demo_daten_index"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_allgemein",
+   "fieldtype": "Tab Break",
+   "label": "Allgemein"
+  },
+  {
+   "fieldname": "vereinsname",
+   "fieldtype": "Data",
+   "label": "Vereinsname",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "rechtsform",
+   "fieldtype": "Select",
+   "label": "Rechtsform",
+   "options": "e.V.\nKörperschaft des öffentlichen Rechts\nGmbH\nSonstige",
+   "default": "e.V."
+  },
+  {
+   "fieldname": "col1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "gruendungsjahr",
+   "fieldtype": "Int",
+   "label": "Gründungsjahr"
+  },
+  {
+   "fieldname": "vereinszweck",
+   "fieldtype": "Text",
+   "label": "Vereinszweck (laut Satzung)"
+  },
+  {
+   "fieldname": "sb_adresse",
+   "fieldtype": "Section Break",
+   "label": "Anschrift (Vereinssitz)"
+  },
+  {
+   "fieldname": "strasse",
+   "fieldtype": "Data",
+   "label": "Straße"
+  },
+  {
+   "fieldname": "hausnummer",
+   "fieldtype": "Data",
+   "label": "Hausnummer"
+  },
+  {
+   "fieldname": "col2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "plz",
+   "fieldtype": "Data",
+   "label": "PLZ"
+  },
+  {
+   "fieldname": "ort",
+   "fieldtype": "Data",
+   "label": "Ort",
+   "reqd": 1
+  },
+  {
+   "fieldname": "bundesland",
+   "fieldtype": "Select",
+   "label": "Bundesland",
+   "options": "\nBaden-Württemberg\nBayern\nBerlin\nBrandenburg\nBremen\nHamburg\nHessen\nMecklenburg-Vorpommern\nNiedersachsen\nNordrhein-Westfalen\nRheinland-Pfalz\nSaarland\nSachsen\nSachsen-Anhalt\nSchleswig-Holstein\nThüringen"
+  },
+  {
+   "fieldname": "sb_kontakt",
+   "fieldtype": "Section Break",
+   "label": "Kontakt & Erscheinungsbild"
+  },
+  {
+   "fieldname": "telefon",
+   "fieldtype": "Data",
+   "label": "Telefon"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "E-Mail",
+   "options": "Email"
+  },
+  {
+   "fieldname": "website",
+   "fieldtype": "Data",
+   "label": "Website"
+  },
+  {
+   "fieldname": "col3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "logo",
+   "fieldtype": "Attach Image",
+   "label": "Vereinslogo"
+  },
+  {
+   "fieldname": "tab_rechtlich",
+   "fieldtype": "Tab Break",
+   "label": "Rechtliches"
+  },
+  {
+   "fieldname": "registernummer",
+   "fieldtype": "Data",
+   "label": "Vereinsregisternummer"
+  },
+  {
+   "fieldname": "amtsgericht",
+   "fieldtype": "Data",
+   "label": "Zuständiges Amtsgericht"
+  },
+  {
+   "fieldname": "col4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "steuernummer",
+   "fieldtype": "Data",
+   "label": "Steuernummer"
+  },
+  {
+   "fieldname": "gemeinnuetzig",
+   "fieldtype": "Check",
+   "label": "Gemeinnützig (§4 Nr. 22 UStG)"
+  },
+  {
+   "fieldname": "sb_vorstand_vertr",
+   "fieldtype": "Section Break",
+   "label": "Vertretungsberechtigter Vorstand"
+  },
+  {
+   "fieldname": "vertretung_vorstand",
+   "fieldtype": "Small Text",
+   "label": "Vertretungsberechtigte Personen (§26 BGB)"
+  },
+  {
+   "fieldname": "sb_datenschutz",
+   "fieldtype": "Section Break",
+   "label": "Datenschutz (DSGVO)"
+  },
+  {
+   "fieldname": "datenschutzbeauftragter",
+   "fieldtype": "Data",
+   "label": "Datenschutzbeauftragter (Name)"
+  },
+  {
+   "fieldname": "datenschutz_email",
+   "fieldtype": "Data",
+   "label": "Datenschutz E-Mail",
+   "options": "Email"
+  },
+  {
+   "fieldname": "col5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "datenschutz_url",
+   "fieldtype": "Data",
+   "label": "Datenschutzerklärung URL"
+  },
+  {
+   "fieldname": "sb_datenschutz_text",
+   "fieldtype": "Section Break",
+   "label": "Datenschutzerklärung (Text)"
+  },
+  {
+   "fieldname": "datenschutz_text",
+   "fieldtype": "Text Editor",
+   "label": "Datenschutzerklärung"
+  },
+  {
+   "fieldname": "sb_impressum",
+   "fieldtype": "Section Break",
+   "label": "Impressum"
+  },
+  {
+   "fieldname": "impressum_text",
+   "fieldtype": "Text Editor",
+   "label": "Impressumstext (Zusatz)"
+  },
+  {
+   "fieldname": "tab_finanzen",
+   "fieldtype": "Tab Break",
+   "label": "Finanzen & Beiträge"
+  },
+  {
+   "fieldname": "geschaeftsjahr_start",
+   "fieldtype": "Select",
+   "label": "Geschäftsjahresbeginn",
+   "options": "01.01.\n01.04.\n01.07.\n01.10.",
+   "default": "01.01."
+  },
+  {
+   "fieldname": "col6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "bankname",
+   "fieldtype": "Data",
+   "label": "Kreditinstitut"
+  },
+  {
+   "fieldname": "iban",
+   "fieldtype": "Data",
+   "label": "IBAN (Vereinskonto)"
+  },
+  {
+   "fieldname": "bic",
+   "fieldtype": "Data",
+   "label": "BIC"
+  },
+  {
+   "fieldname": "col7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "konto_inhaber",
+   "fieldtype": "Data",
+   "label": "Kontoinhaber"
+  },
+  {
+   "fieldname": "sb_beitrag",
+   "fieldtype": "Section Break",
+   "label": "Beitragseinstellungen"
+  },
+  {
+   "fieldname": "beitrag_faelligkeit",
+   "fieldtype": "Select",
+   "label": "Beitrag fällig am",
+   "options": "01.01.\n01.04.\n01.07.\n01.10.",
+   "default": "01.01."
+  },
+  {
+   "fieldname": "beitrag_intervall",
+   "fieldtype": "Select",
+   "label": "Zahlungsintervall",
+   "options": "Jährlich\nHalbjährlich\nVierteljährlich\nMonatlich",
+   "default": "Jährlich"
+  },
+  {
+   "fieldname": "col8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "beitrag_hinweis",
+   "fieldtype": "Small Text",
+   "label": "Hinweistext auf Beitragsrechnungen"
+  },
+  {
+   "fieldname": "sb_sepa",
+   "fieldtype": "Section Break",
+   "label": "SEPA Lastschrift"
+  },
+  {
+   "fieldname": "sepa_glaeubiger_id",
+   "fieldtype": "Data",
+   "label": "SEPA Gläubiger-ID"
+  },
+  {
+   "fieldname": "sepa_mandatsreferenz_prefix",
+   "fieldtype": "Data",
+   "label": "Mandatsreferenz-Prefix",
+   "default": "MANDAT-"
+  },
+  {
+   "fieldname": "tab_design",
+   "fieldtype": "Tab Break",
+   "label": "Darstellung"
+  },
+  {
+   "fieldname": "primaerfarbe",
+   "fieldtype": "Color",
+   "label": "Primärfarbe"
+  },
+  {
+   "fieldname": "col9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sekundaerfarbe",
+   "fieldtype": "Color",
+   "label": "Sekundärfarbe"
+  },
+  {
+   "fieldname": "vereinsmotto",
+   "fieldtype": "Data",
+   "label": "Vereinsmotto / Slogan"
+  },
+  {
+   "fieldname": "willkommenstext",
+   "fieldtype": "Text Editor",
+   "label": "Willkommenstext (Portal)"
+  },
+  {
+   "fieldname": "sb_externe_dienste",
+   "fieldtype": "Section Break",
+   "label": "Externe Dienste"
+  },
+  {
+   "fieldname": "google_maps_aktiv",
+   "fieldtype": "Check",
+   "label": "Google Maps aktiviert",
+   "default": "1"
+  },
+  {
+   "fieldname": "google_maps_key",
+   "fieldtype": "Data",
+   "label": "Google Maps API-Schlüssel",
+   "description": "Wird für Adresssuche und Kartenanzeige bei Veranstaltungen verwendet. Maps Embed API + Geocoding API im Google Cloud Console aktivieren."
+  },
+  {
+   "fieldname": "sb_demo",
+   "fieldtype": "Section Break",
+   "label": "Demo-Daten",
+   "hidden": 1
+  },
+  {
+   "fieldname": "demo_daten_aktiv",
+   "fieldtype": "Check",
+   "label": "Demo-Daten vorhanden",
+   "hidden": 1,
+   "read_only": 1,
+   "description": "Wird von dms_verein.setup_demo gesetzt. Nicht von Hand aendern."
+  },
+  {
+   "fieldname": "demo_daten_erstellt",
+   "fieldtype": "Datetime",
+   "label": "Demo-Daten erstellt am",
+   "hidden": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "demo_daten_index",
+   "fieldtype": "Long Text",
+   "label": "Demo-Daten Index (JSON)",
+   "hidden": 1,
+   "read_only": 1,
+   "description": "Liste der angelegten Demo-Datensaetze, damit sie exakt wieder entfernt werden koennen."
+  }
+ ],
+ "modified": "2026-06-24 00:00:00",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1
+  },
+  {
+   "role": "Vereins Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

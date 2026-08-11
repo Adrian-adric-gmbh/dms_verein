@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+  <title>DMS Verein – Die digitale Vereinsplattform</title>
+  <meta name="description" content="Mitgliederverwaltung, interner Chat, Finanzen, SEPA und ein mobiles Mitgliederportal – alles in einer Plattform. Für Vereine, Feuerwehren und mehr." />
+
+  <!-- ══ Open Graph (Facebook, LinkedIn, WhatsApp …) ══ -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Sascha Böhm Software &amp; App" />
+  <meta property="og:title" content="DMS Verein – Die digitale Vereinsplattform" />
+  <meta property="og:description" content="Mitgliederverwaltung, interner Chat (E2E-verschlüsselt), Finanzen, SEPA und ein mobiles Mitgliederportal – alles in einer Plattform. Für Vereine, Feuerwehren und mehr." />
+  <meta property="og:image" content="{{ og_image }}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:url" content="{{ og_url }}" />
+  <meta property="og:locale" content="de_DE" />
+
+  <!-- ══ Twitter / X Card ══ -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="DMS Verein – Die digitale Vereinsplattform" />
+  <meta name="twitter:description" content="Mitgliederverwaltung, Chat, Finanzen und mobiles Portal – alles in einer Plattform." />
+  <meta name="twitter:image" content="{{ og_image }}" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    .navbar, .page-head, nav.navbar, footer.web-footer,
+    .web-footer, #navbar, .container > .page-header { display: none !important; }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #fff; }
+    * { -webkit-tap-highlight-color: transparent; }
+  </style>
+
+  <script type="module" crossorigin src="/assets/dms_verein/frontend/assets/index.js"></script>
+  <link rel="stylesheet" href="/assets/dms_verein/frontend/assets/index.css" />
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.csrf_token = "{{ frappe.session.csrf_token }}";
+    window.frappe_session_user = "{{ frappe.session.user }}";
+    window.frappe_user_roles = {{ rollen_json }};
+    window.frappe = window.frappe || {};
+    window.frappe.csrf_token = window.csrf_token;
+  </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{
+  "creation": "2026-06-24 00:00:00",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "module": "Vereinsverwaltung",
+  "name": "SEPA Mandat",
+  "autoname": "format:MANDAT-{####}",
+  "title_field": "mandatsreferenz",
+  "field_order": [
+    "mandatsreferenz", "status", "col1", "mitglied",
+    "sb_bank",
+    "kontoinhaber", "iban", "col2", "bic", "bank_name",
+    "sb_mandat",
+    "erteilungsdatum", "col3", "art", "glaeubiger_id",
+    "sb_history",
+    "letzter_einzug", "anzahl_einzuege",
+    "widerrufen_am", "widerrufsgrund"
+  ],
+  "fields": [
+    {"fieldname": "mandatsreferenz", "fieldtype": "Data", "label": "Mandatsreferenz", "read_only": 1, "in_list_view": 1},
+    {"fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "Aktiv\nErstlastschrift\nWiderrufen\nAbgelaufen", "default": "Erstlastschrift", "in_list_view": 1},
+    {"fieldname": "col1", "fieldtype": "Column Break"},
+    {"fieldname": "mitglied", "fieldtype": "Link", "label": "Mitglied", "options": "Mitglied", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "sb_bank", "fieldtype": "Section Break", "label": "Bankverbindung"},
+    {"fieldname": "kontoinhaber", "fieldtype": "Data", "label": "Kontoinhaber", "reqd": 1},
+    {"fieldname": "iban", "fieldtype": "Data", "label": "IBAN", "reqd": 1},
+    {"fieldname": "col2", "fieldtype": "Column Break"},
+    {"fieldname": "bic", "fieldtype": "Data", "label": "BIC"},
+    {"fieldname": "bank_name", "fieldtype": "Data", "label": "Kreditinstitut"},
+    {"fieldname": "sb_mandat", "fieldtype": "Section Break", "label": "Mandatsdetails"},
+    {"fieldname": "erteilungsdatum", "fieldtype": "Date", "label": "Mandatserteilungsdatum", "reqd": 1},
+    {"fieldname": "col3", "fieldtype": "Column Break"},
+    {"fieldname": "art", "fieldtype": "Select", "label": "Mandatsart", "options": "CORE (Basis)\nCOR1 (Einzel-SEPA)", "default": "CORE (Basis)"},
+    {"fieldname": "glaeubiger_id", "fieldtype": "Data", "label": "Gläubiger-ID"},
+    {"fieldname": "sb_history", "fieldtype": "Section Break", "label": "Einzugshistorie"},
+    {"fieldname": "letzter_einzug", "fieldtype": "Date", "label": "Letzter Einzug"},
+    {"fieldname": "anzahl_einzuege", "fieldtype": "Int", "label": "Anzahl Einzüge", "default": "0"},
+    {"fieldname": "widerrufen_am", "fieldtype": "Date", "label": "Widerrufen am"},
+    {"fieldname": "widerrufsgrund", "fieldtype": "Small Text", "label": "Widerrufsgrund"}
+  ],
+  "modified": "2026-06-24 00:00:00",
+  "modified_by": "Administrator",
+  "owner": "Administrator",
+  "permissions": [
+    {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+    {"role": "Vereins Admin", "read": 1, "write": 1, "create": 1},
+    {"role": "Kassenwart", "read": 1, "write": 1, "create": 1}
+  ],
+  "sort_field": "erteilungsdatum",
+  "sort_order": "DESC",
+  "track_changes": 1
+}

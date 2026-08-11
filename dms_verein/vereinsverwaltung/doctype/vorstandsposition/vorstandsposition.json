@@ -1,0 +1,29 @@
+{
+  "creation": "2026-06-24 00:00:00",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "module": "Vereinsverwaltung",
+  "name": "Vorstandsposition",
+  "autoname": "field:bezeichnung",
+  "title_field": "bezeichnung",
+  "field_order": [
+    "bezeichnung", "rang", "col1", "pflichtposition", "aktiv"
+  ],
+  "fields": [
+    {"fieldname": "bezeichnung", "fieldtype": "Data", "label": "Bezeichnung", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "rang", "fieldtype": "Int", "label": "Rang (Sortierung)", "in_list_view": 1},
+    {"fieldname": "col1", "fieldtype": "Column Break"},
+    {"fieldname": "pflichtposition", "fieldtype": "Check", "label": "Pflichtposition (§26 BGB)"},
+    {"fieldname": "aktiv", "fieldtype": "Check", "label": "Aktiv", "default": "1"}
+  ],
+  "modified": "2026-06-24 00:00:00",
+  "modified_by": "Administrator",
+  "owner": "Administrator",
+  "permissions": [
+    {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+    {"role": "Vereins Admin", "read": 1, "write": 1, "create": 1, "delete": 1},
+    {"role": "Mitglied", "read": 1}
+  ],
+  "sort_field": "rang",
+  "sort_order": "ASC"
+}

@@ -1,0 +1,23 @@
+{
+  "creation": "2026-06-24 00:00:00",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "module": "Vereinsverwaltung",
+  "name": "Blog Kategorie",
+  "title_field": "bezeichnung",
+  "fields": [
+    {"fieldname": "bezeichnung", "fieldtype": "Data", "label": "Bezeichnung", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "slug", "fieldtype": "Data", "label": "Slug"},
+    {"fieldname": "beschreibung", "fieldtype": "Text", "label": "Beschreibung"},
+    {"fieldname": "bild", "fieldtype": "Attach Image", "label": "Kategoriebild"}
+  ],
+  "modified": "2026-06-24 00:00:00",
+  "modified_by": "Administrator",
+  "owner": "Administrator",
+  "permissions": [
+    {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+    {"role": "Vereins Admin", "read": 1, "write": 1, "create": 1, "delete": 1},
+    {"role": "Blogger", "read": 1},
+    {"role": "Guest", "read": 1}
+  ]
+}

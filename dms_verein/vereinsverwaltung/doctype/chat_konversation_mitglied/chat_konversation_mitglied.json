@@ -1,0 +1,22 @@
+{
+  "creation": "2026-06-26 00:00:00",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "istable": 1,
+  "module": "Vereinsverwaltung",
+  "name": "Chat Konversation Mitglied",
+  "field_order": ["mitglied_email", "anzeigename", "avatar", "ist_admin", "beigetreten_am"],
+  "fields": [
+    {"fieldname": "mitglied_email", "fieldtype": "Data",
+     "label": "E-Mail", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "anzeigename", "fieldtype": "Data",
+     "label": "Anzeigename", "in_list_view": 1},
+    {"fieldname": "avatar", "fieldtype": "Data", "label": "Avatar URL"},
+    {"fieldname": "ist_admin", "fieldtype": "Check",
+     "label": "Admin", "default": "0", "in_list_view": 1},
+    {"fieldname": "beigetreten_am", "fieldtype": "Datetime", "label": "Beigetreten am"}
+  ],
+  "modified": "2026-06-26 00:00:00",
+  "modified_by": "Administrator",
+  "owner": "Administrator"
+}

@@ -1,0 +1,50 @@
+{
+  "creation": "2026-06-24 00:00:00",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "module": "Vereinsverwaltung",
+  "name": "Mitgliedstyp",
+  "autoname": "field:bezeichnung",
+  "title_field": "bezeichnung",
+  "field_order": [
+    "bezeichnung", "farbe", "col1", "aktiv",
+    "sb_beitrag",
+    "beitragsbetrag", "waehrung", "col2", "zahlungsintervall",
+    "sb_info",
+    "beschreibung", "col3", "max_alter", "min_alter",
+    "ist_standardklasse",
+    "stimmberechtigt", "col4", "vorstandsfaehig"
+  ],
+  "fields": [
+    {"fieldname": "bezeichnung", "fieldtype": "Data", "label": "Bezeichnung", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "farbe", "fieldtype": "Color", "label": "Farbe (Anzeige)"},
+    {"fieldname": "col1", "fieldtype": "Column Break"},
+    {"fieldname": "aktiv", "fieldtype": "Check", "label": "Aktiv", "default": "1", "in_list_view": 1},
+    {"fieldname": "sb_beitrag", "fieldtype": "Section Break", "label": "Beitrag"},
+    {"fieldname": "beitragsbetrag", "fieldtype": "Currency", "label": "Beitragsbetrag", "in_list_view": 1},
+    {"fieldname": "waehrung", "fieldtype": "Data", "label": "Währung", "default": "EUR"},
+    {"fieldname": "col2", "fieldtype": "Column Break"},
+    {"fieldname": "zahlungsintervall", "fieldtype": "Select", "label": "Zahlungsintervall", "options": "Jährlich\nHalbjährlich\nVierteljährlich\nMonatlich\nEinmalig\nBeitragsfrei", "default": "Jährlich", "in_list_view": 1},
+    {"fieldname": "sb_info", "fieldtype": "Section Break", "label": "Bedingungen"},
+    {"fieldname": "beschreibung", "fieldtype": "Text", "label": "Beschreibung"},
+    {"fieldname": "col3", "fieldtype": "Column Break"},
+    {"fieldname": "min_alter", "fieldtype": "Int", "label": "Mindestalter"},
+    {"fieldname": "max_alter", "fieldtype": "Int", "label": "Höchstalter (0 = unbegrenzt)"},
+    {"fieldname": "ist_standardklasse", "fieldtype": "Check", "label": "Standardklasse (Fallback bei auto. Zuweisung)", "default": "0"},
+    {"fieldname": "stimmberechtigt", "fieldtype": "Check", "label": "Stimmberechtigt", "default": "1"},
+    {"fieldname": "col4", "fieldtype": "Column Break"},
+    {"fieldname": "vorstandsfaehig", "fieldtype": "Check", "label": "Vorstandsfähig", "default": "1"}
+  ],
+  "modified": "2026-06-24 00:00:00",
+  "modified_by": "Administrator",
+  "owner": "Administrator",
+  "permissions": [
+    {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+    {"role": "Vereins Admin", "read": 1, "write": 1, "create": 1, "delete": 1},
+    {"role": "Kassenwart", "read": 1},
+    {"role": "Mitglied", "read": 1}
+  ],
+  "sort_field": "bezeichnung",
+  "sort_order": "ASC",
+  "track_changes": 1
+}

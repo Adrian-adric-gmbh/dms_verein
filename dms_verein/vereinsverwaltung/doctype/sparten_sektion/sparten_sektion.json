@@ -1,0 +1,41 @@
+{
+  "creation": "2026-06-24 00:00:00",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "istable": 1,
+  "module": "Vereinsverwaltung",
+  "name": "Sparten Sektion",
+  "field_order": [
+    "typ", "hintergrund", "col_a",
+    "titel", "untertitel",
+    "text",
+    "sb_bild",
+    "bild", "bild_ausrichtung", "col_b",
+    "cta_text", "cta_link",
+    "galerie_bilder",
+    "html_inhalt"
+  ],
+  "fields": [
+    {"fieldname": "typ", "fieldtype": "Select", "label": "Block-Typ", "reqd": 1, "in_list_view": 1,
+     "options": "Held-Banner\nText\nText & Bild\nBildergalerie\nVeranstaltungen\nKontaktkarte\nTrenner\nHTML-Block"},
+    {"fieldname": "hintergrund", "fieldtype": "Select", "label": "Hintergrund",
+     "options": "Weiß\nHellgrau\nPrimärfarbe\nDunkel", "default": "Weiß"},
+    {"fieldname": "col_a", "fieldtype": "Column Break"},
+    {"fieldname": "titel", "fieldtype": "Data", "label": "Titel / Überschrift"},
+    {"fieldname": "untertitel", "fieldtype": "Data", "label": "Untertitel"},
+    {"fieldname": "text", "fieldtype": "Text Editor", "label": "Text / Inhalt"},
+    {"fieldname": "sb_bild", "fieldtype": "Section Break", "label": "Bild & CTA"},
+    {"fieldname": "bild", "fieldtype": "Attach Image", "label": "Bild"},
+    {"fieldname": "bild_ausrichtung", "fieldtype": "Select", "label": "Bild-Position",
+     "options": "Rechts\nLinks", "default": "Rechts"},
+    {"fieldname": "col_b", "fieldtype": "Column Break"},
+    {"fieldname": "cta_text", "fieldtype": "Data", "label": "Button-Text"},
+    {"fieldname": "cta_link", "fieldtype": "Data", "label": "Button-Link (URL)"},
+    {"fieldname": "galerie_bilder", "fieldtype": "Text", "label": "Galerie-Bilder (JSON-Array mit Bild-URLs)"},
+    {"fieldname": "html_inhalt", "fieldtype": "Code", "label": "HTML-Inhalt (für HTML-Block)"}
+  ],
+  "modified": "2026-06-24 00:00:00",
+  "modified_by": "Administrator",
+  "owner": "Administrator",
+  "permissions": []
+}

@@ -1,0 +1,48 @@
+{
+  "creation": "2026-06-24 00:00:00",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "module": "Vereinsverwaltung",
+  "name": "Versammlungsprotokoll",
+  "autoname": "format:PROT-{YYYY}-{####}",
+  "title_field": "titel",
+  "field_order": [
+    "titel", "typ", "col1", "datum", "ort",
+    "sb_teilnehmer",
+    "anzahl_anwesende", "col2", "versammlungsleiter", "schriftfuehrer",
+    "sb_inhalt",
+    "tagesordnung", "beschluesse", "sonstiges",
+    "sb_anhang",
+    "anhang"
+  ],
+  "fields": [
+    {"fieldname": "titel", "fieldtype": "Data", "label": "Titel", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "typ", "fieldtype": "Select", "label": "Art der Versammlung", "options": "Hauptversammlung\nVorstandssitzung\nSpartensitzung\nAußerordentliche Versammlung\nSonstige", "in_list_view": 1},
+    {"fieldname": "col1", "fieldtype": "Column Break"},
+    {"fieldname": "datum", "fieldtype": "Date", "label": "Datum", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "ort", "fieldtype": "Data", "label": "Ort"},
+    {"fieldname": "sb_teilnehmer", "fieldtype": "Section Break", "label": "Teilnehmer"},
+    {"fieldname": "anzahl_anwesende", "fieldtype": "Int", "label": "Anzahl Anwesende"},
+    {"fieldname": "col2", "fieldtype": "Column Break"},
+    {"fieldname": "versammlungsleiter", "fieldtype": "Link", "label": "Versammlungsleiter", "options": "Mitglied"},
+    {"fieldname": "schriftfuehrer", "fieldtype": "Link", "label": "Schriftführer", "options": "Mitglied"},
+    {"fieldname": "sb_inhalt", "fieldtype": "Section Break", "label": "Inhalt"},
+    {"fieldname": "tagesordnung", "fieldtype": "Text Editor", "label": "Tagesordnung"},
+    {"fieldname": "beschluesse", "fieldtype": "Text Editor", "label": "Beschlüsse"},
+    {"fieldname": "sonstiges", "fieldtype": "Text Editor", "label": "Sonstiges"},
+    {"fieldname": "sb_anhang", "fieldtype": "Section Break", "label": "Anhang"},
+    {"fieldname": "anhang", "fieldtype": "Attach", "label": "Protokoll-PDF"}
+  ],
+  "modified": "2026-06-24 00:00:00",
+  "modified_by": "Administrator",
+  "owner": "Administrator",
+  "permissions": [
+    {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+    {"role": "Vereins Admin", "read": 1, "write": 1, "create": 1, "delete": 1},
+    {"role": "Vorstand", "read": 1, "write": 1, "create": 1},
+    {"role": "Mitglied", "read": 1}
+  ],
+  "sort_field": "datum",
+  "sort_order": "DESC",
+  "track_changes": 1
+}

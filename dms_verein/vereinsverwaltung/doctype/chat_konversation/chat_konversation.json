@@ -1,0 +1,27 @@
+{
+  "creation": "2026-06-26 00:00:00",
+  "doctype": "DocType",
+  "autoname": "hash",
+  "engine": "InnoDB",
+  "module": "Vereinsverwaltung",
+  "name": "Chat Konversation",
+  "field_order": [
+    "typ", "gruppenname", "gruppenbild",
+    "letzte_nachricht", "letzte_nachricht_datum", "letzte_nachricht_absender",
+    "mitglieder"
+  ],
+  "fields": [
+    {"fieldname": "typ", "fieldtype": "Select",
+     "options": "Direkt\nGruppe", "label": "Typ", "reqd": 1},
+    {"fieldname": "gruppenname", "fieldtype": "Data", "label": "Gruppenname"},
+    {"fieldname": "gruppenbild", "fieldtype": "Attach Image", "label": "Gruppenbild"},
+    {"fieldname": "letzte_nachricht", "fieldtype": "Text", "label": "Letzte Nachricht (verschlüsselt)"},
+    {"fieldname": "letzte_nachricht_datum", "fieldtype": "Datetime", "label": "Datum letzte Nachricht"},
+    {"fieldname": "letzte_nachricht_absender", "fieldtype": "Data", "label": "Absender letzte Nachricht"},
+    {"fieldname": "mitglieder", "fieldtype": "Table",
+     "options": "Chat Konversation Mitglied", "label": "Mitglieder"}
+  ],
+  "modified": "2026-06-26 00:00:00",
+  "modified_by": "Administrator",
+  "owner": "Administrator"
+}

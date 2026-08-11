@@ -1,0 +1,37 @@
+{
+  "creation": "2026-06-24 00:00:00",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "module": "Vereinsverwaltung",
+  "name": "Vorstandsmitglied",
+  "autoname": "format:VM-{####}",
+  "title_field": "mitglied",
+  "field_order": [
+    "mitglied", "position", "col1", "amtsperiode_von", "amtsperiode_bis", "aktiv",
+    "sb_info",
+    "telefon_dienstlich", "email_dienstlich"
+  ],
+  "fields": [
+    {"fieldname": "mitglied", "fieldtype": "Link", "label": "Mitglied", "options": "Mitglied", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "position", "fieldtype": "Link", "label": "Position", "options": "Vorstandsposition", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "col1", "fieldtype": "Column Break"},
+    {"fieldname": "amtsperiode_von", "fieldtype": "Date", "label": "Amtsantritt", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "amtsperiode_bis", "fieldtype": "Date", "label": "Amtsende"},
+    {"fieldname": "aktiv", "fieldtype": "Check", "label": "Aktuell im Amt", "default": "1", "in_list_view": 1},
+    {"fieldname": "sb_info", "fieldtype": "Section Break", "label": "Dienstkontakt"},
+    {"fieldname": "telefon_dienstlich", "fieldtype": "Data", "label": "Telefon (dienstlich)"},
+    {"fieldname": "email_dienstlich", "fieldtype": "Data", "label": "E-Mail (dienstlich)", "options": "Email"}
+  ],
+  "modified": "2026-06-24 00:00:00",
+  "modified_by": "Administrator",
+  "owner": "Administrator",
+  "permissions": [
+    {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+    {"role": "Vereins Admin", "read": 1, "write": 1, "create": 1, "delete": 1},
+    {"role": "Vorstand", "read": 1},
+    {"role": "Mitglied", "read": 1}
+  ],
+  "sort_field": "amtsperiode_von",
+  "sort_order": "DESC",
+  "track_changes": 1
+}

@@ -1,0 +1,22 @@
+{
+  "creation": "2026-06-24 00:00:00",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "istable": 1,
+  "module": "Vereinsverwaltung",
+  "name": "Spartenmitglied",
+  "field_order": [
+    "mitglied", "funktion", "col1", "von", "bis", "aktiv"
+  ],
+  "fields": [
+    {"fieldname": "mitglied", "fieldtype": "Link", "label": "Mitglied", "options": "Mitglied", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "funktion", "fieldtype": "Data", "label": "Funktion in der Sparte", "in_list_view": 1},
+    {"fieldname": "col1", "fieldtype": "Column Break"},
+    {"fieldname": "von", "fieldtype": "Date", "label": "Mitglied seit", "in_list_view": 1},
+    {"fieldname": "bis", "fieldtype": "Date", "label": "Mitglied bis"},
+    {"fieldname": "aktiv", "fieldtype": "Check", "label": "Aktiv", "default": "1", "in_list_view": 1}
+  ],
+  "modified": "2026-06-24 00:00:00",
+  "modified_by": "Administrator",
+  "owner": "Administrator"
+}

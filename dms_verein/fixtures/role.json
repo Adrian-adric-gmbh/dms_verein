@@ -1,0 +1,44 @@
+[
+ {
+  "desk_access": 1,
+  "disabled": 0,
+  "doctype": "Role",
+  "name": "Vereins Admin",
+  "role_name": "Vereins Admin"
+ },
+ {
+  "desk_access": 1,
+  "disabled": 0,
+  "doctype": "Role",
+  "name": "Kassenwart",
+  "role_name": "Kassenwart"
+ },
+ {
+  "desk_access": 1,
+  "disabled": 0,
+  "doctype": "Role",
+  "name": "Spartenleiter",
+  "role_name": "Spartenleiter"
+ },
+ {
+  "desk_access": 1,
+  "disabled": 0,
+  "doctype": "Role",
+  "name": "Vorstand",
+  "role_name": "Vorstand"
+ },
+ {
+  "desk_access": 0,
+  "disabled": 0,
+  "doctype": "Role",
+  "name": "Mitglied",
+  "role_name": "Mitglied"
+ },
+ {
+  "desk_access": 1,
+  "disabled": 0,
+  "doctype": "Role",
+  "name": "Blogger",
+  "role_name": "Blogger"
+ }
+]

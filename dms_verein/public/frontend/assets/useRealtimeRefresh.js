@@ -1,0 +1,1 @@
+import{e as d,N as r}from"./index.js";function o(e,t){function n(a){var i;(!(e!=null&&e.length)||e.includes((i=a.detail)==null?void 0:i.doctype))&&t(a.detail)}d(()=>window.addEventListener("frappe:dms_update",n)),r(()=>window.removeEventListener("frappe:dms_update",n))}export{o as u};

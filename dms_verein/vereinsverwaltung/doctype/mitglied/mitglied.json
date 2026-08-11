@@ -1,0 +1,428 @@
+{
+  "creation": "2026-06-24 00:00:00",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "module": "Vereinsverwaltung",
+  "name": "Mitglied",
+  "autoname": "format:M-{####}",
+  "title_field": "vollstaendiger_name",
+  "search_fields": "vorname,nachname,email,mitgliedsnummer",
+  "field_order": [
+    "tab_stammdaten",
+    "mitgliedsnummer",
+    "status",
+    "col_s1",
+    "mitgliedstyp",
+    "eintrittsdatum",
+    "sb_person",
+    "anrede",
+    "vorname",
+    "nachname",
+    "col_p1",
+    "geburtsdatum",
+    "geschlecht",
+    "vollstaendiger_name",
+    "sb_adresse",
+    "strasse",
+    "hausnummer",
+    "col_a1",
+    "plz",
+    "ort",
+    "land",
+    "sb_kontakt",
+    "telefon",
+    "mobil",
+    "col_k1",
+    "email",
+    "foto",
+    "sb_notfall",
+    "notfallkontakt_name",
+    "notfallkontakt_telefon",
+    "tab_mitgliedschaft",
+    "sb_mitgliedschaft",
+    "mitgliedschaften",
+    "sb_sparten",
+    "sparten",
+    "tab_finanzen",
+    "sb_bank",
+    "bank_name",
+    "col_b1",
+    "iban",
+    "bic",
+    "sb_sepa",
+    "sepa_mandat",
+    "sb_rechnungen",
+    "beitragsrechnungen",
+    "tab_portal",
+    "portal_benutzer",
+    "col_po1",
+    "portal_aktiv",
+    "letzter_login",
+    "portal_notiz",
+    "tab_intern",
+    "aufnahmegebuehr_bezahlt",
+    "col_i1",
+    "kuendigungsdatum",
+    "austrittsgrund",
+    "notizen",
+    "ist_blogger"
+  ],
+  "fields": [
+    {
+      "fieldname": "tab_stammdaten",
+      "fieldtype": "Tab Break",
+      "label": "Stammdaten"
+    },
+    {
+      "fieldname": "mitgliedsnummer",
+      "fieldtype": "Data",
+      "label": "Mitgliedsnummer",
+      "read_only": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "label": "Status",
+      "options": "Aktiv\nPassiv\nGesperrt\nAusgetreten\nVerstorben",
+      "default": "Aktiv",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "col_s1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "mitgliedstyp",
+      "fieldtype": "Link",
+      "label": "Mitgliedstyp",
+      "options": "Mitgliedstyp",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "eintrittsdatum",
+      "fieldtype": "Date",
+      "label": "Eintrittsdatum",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "sb_person",
+      "fieldtype": "Section Break",
+      "label": "Persönliche Daten"
+    },
+    {
+      "fieldname": "anrede",
+      "fieldtype": "Select",
+      "label": "Anrede",
+      "options": "\nHerr\nFrau\nDivers\nOhne Angabe"
+    },
+    {
+      "fieldname": "vorname",
+      "fieldtype": "Data",
+      "label": "Vorname",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "nachname",
+      "fieldtype": "Data",
+      "label": "Nachname",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "col_p1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "geburtsdatum",
+      "fieldtype": "Date",
+      "label": "Geburtsdatum"
+    },
+    {
+      "fieldname": "geschlecht",
+      "fieldtype": "Select",
+      "label": "Geschlecht",
+      "options": "\nMännlich\nWeiblich\nDivers\nOhne Angabe"
+    },
+    {
+      "fieldname": "vollstaendiger_name",
+      "fieldtype": "Data",
+      "label": "Vollständiger Name",
+      "read_only": 1,
+      "hidden": 1
+    },
+    {
+      "fieldname": "sb_adresse",
+      "fieldtype": "Section Break",
+      "label": "Adresse"
+    },
+    {
+      "fieldname": "strasse",
+      "fieldtype": "Data",
+      "label": "Straße & Hausnummer",
+      "reqd": 1
+    },
+    {
+      "fieldname": "hausnummer",
+      "fieldtype": "Data",
+      "label": "Adresszusatz"
+    },
+    {
+      "fieldname": "col_a1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "plz",
+      "fieldtype": "Data",
+      "label": "PLZ",
+      "reqd": 1
+    },
+    {
+      "fieldname": "ort",
+      "fieldtype": "Data",
+      "label": "Ort",
+      "reqd": 1
+    },
+    {
+      "fieldname": "land",
+      "fieldtype": "Data",
+      "label": "Land",
+      "default": "Deutschland"
+    },
+    {
+      "fieldname": "sb_kontakt",
+      "fieldtype": "Section Break",
+      "label": "Kontakt"
+    },
+    {
+      "fieldname": "telefon",
+      "fieldtype": "Data",
+      "label": "Telefon"
+    },
+    {
+      "fieldname": "mobil",
+      "fieldtype": "Data",
+      "label": "Mobil"
+    },
+    {
+      "fieldname": "col_k1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "email",
+      "fieldtype": "Data",
+      "label": "E-Mail",
+      "options": "Email"
+    },
+    {
+      "fieldname": "foto",
+      "fieldtype": "Attach Image",
+      "label": "Foto"
+    },
+    {
+      "fieldname": "sb_notfall",
+      "fieldtype": "Section Break",
+      "label": "Notfallkontakt"
+    },
+    {
+      "fieldname": "notfallkontakt_name",
+      "fieldtype": "Data",
+      "label": "Notfallkontakt Name"
+    },
+    {
+      "fieldname": "notfallkontakt_telefon",
+      "fieldtype": "Data",
+      "label": "Notfallkontakt Telefon"
+    },
+    {
+      "fieldname": "tab_mitgliedschaft",
+      "fieldtype": "Tab Break",
+      "label": "Mitgliedschaft & Sparten"
+    },
+    {
+      "fieldname": "sb_mitgliedschaft",
+      "fieldtype": "Section Break",
+      "label": "Mitgliedschaftshistorie"
+    },
+    {
+      "fieldname": "mitgliedschaften",
+      "fieldtype": "Table",
+      "label": "Mitgliedschaften",
+      "options": "Mitgliedschaft"
+    },
+    {
+      "fieldname": "sb_sparten",
+      "fieldtype": "Section Break",
+      "label": "Sparten"
+    },
+    {
+      "fieldname": "sparten",
+      "fieldtype": "Table",
+      "label": "Spartenmitgliedschaften",
+      "options": "Spartenmitglied"
+    },
+    {
+      "fieldname": "tab_finanzen",
+      "fieldtype": "Tab Break",
+      "label": "Finanzen"
+    },
+    {
+      "fieldname": "sb_bank",
+      "fieldtype": "Section Break",
+      "label": "Bankverbindung"
+    },
+    {
+      "fieldname": "bank_name",
+      "fieldtype": "Data",
+      "label": "Kreditinstitut"
+    },
+    {
+      "fieldname": "col_b1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "iban",
+      "fieldtype": "Data",
+      "label": "IBAN"
+    },
+    {
+      "fieldname": "bic",
+      "fieldtype": "Data",
+      "label": "BIC"
+    },
+    {
+      "fieldname": "sb_sepa",
+      "fieldtype": "Section Break",
+      "label": "SEPA Lastschrift"
+    },
+    {
+      "fieldname": "sepa_mandat",
+      "fieldtype": "Link",
+      "label": "SEPA Mandat",
+      "options": "SEPA Mandat"
+    },
+    {
+      "fieldname": "sb_rechnungen",
+      "fieldtype": "Section Break",
+      "label": "Beitragsrechnungen"
+    },
+    {
+      "fieldname": "beitragsrechnungen",
+      "fieldtype": "Table",
+      "label": "Beitragsrechnungen",
+      "options": "Beitragsrechnung"
+    },
+    {
+      "fieldname": "tab_portal",
+      "fieldtype": "Tab Break",
+      "label": "Portal"
+    },
+    {
+      "fieldname": "portal_benutzer",
+      "fieldtype": "Link",
+      "label": "Portal-Benutzer",
+      "options": "User"
+    },
+    {
+      "fieldname": "col_po1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "portal_aktiv",
+      "fieldtype": "Check",
+      "label": "Portal-Zugang aktiv",
+      "default": "0"
+    },
+    {
+      "fieldname": "letzter_login",
+      "fieldtype": "Datetime",
+      "label": "Letzter Login",
+      "read_only": 1
+    },
+    {
+      "fieldname": "portal_notiz",
+      "fieldtype": "Small Text",
+      "label": "Notiz (intern)"
+    },
+    {
+      "fieldname": "tab_intern",
+      "fieldtype": "Tab Break",
+      "label": "Intern"
+    },
+    {
+      "fieldname": "aufnahmegebuehr_bezahlt",
+      "fieldtype": "Check",
+      "label": "Aufnahmegebühr bezahlt"
+    },
+    {
+      "fieldname": "col_i1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "kuendigungsdatum",
+      "fieldtype": "Date",
+      "label": "Kündigungsdatum"
+    },
+    {
+      "fieldname": "austrittsgrund",
+      "fieldtype": "Select",
+      "label": "Austrittsgrund",
+      "options": "\nFreiwillig\nAusschluss\nVerstorben\nUmzug\nSonstige"
+    },
+    {
+      "fieldname": "notizen",
+      "fieldtype": "Text Editor",
+      "label": "Interne Notizen"
+    },
+    {
+      "fieldname": "ist_blogger",
+      "fieldtype": "Check",
+      "label": "Darf Blog-Beiträge erstellen",
+      "default": "0",
+      "insert_after": "notizen"
+    }
+  ],
+  "modified": "2026-06-24 00:00:00",
+  "modified_by": "Administrator",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1,
+      "report": 1,
+      "export": 1
+    },
+    {
+      "role": "Vereins Admin",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1,
+      "report": 1,
+      "export": 1
+    },
+    {
+      "role": "Kassenwart",
+      "read": 1,
+      "write": 1,
+      "report": 1
+    },
+    {
+      "role": "Spartenleiter",
+      "read": 1
+    },
+    {
+      "role": "Vorstand",
+      "read": 1
+    }
+  ],
+  "sort_field": "nachname",
+  "sort_order": "ASC",
+  "track_changes": 1
+}

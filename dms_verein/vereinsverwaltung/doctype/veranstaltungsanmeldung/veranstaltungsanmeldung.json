@@ -1,0 +1,22 @@
+{
+  "creation": "2026-06-24 00:00:00",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "istable": 1,
+  "module": "Vereinsverwaltung",
+  "name": "Veranstaltungsanmeldung",
+  "field_order": [
+    "mitglied", "name_gast", "col1", "anmeldedatum", "status", "anmerkung"
+  ],
+  "fields": [
+    {"fieldname": "mitglied", "fieldtype": "Link", "label": "Mitglied", "options": "Mitglied", "in_list_view": 1},
+    {"fieldname": "name_gast", "fieldtype": "Data", "label": "Gast (Name)", "in_list_view": 1},
+    {"fieldname": "col1", "fieldtype": "Column Break"},
+    {"fieldname": "anmeldedatum", "fieldtype": "Datetime", "label": "Angemeldet am", "in_list_view": 1},
+    {"fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "Angemeldet\nWarteliste\nAbgesagt\nAnwesend", "default": "Angemeldet", "in_list_view": 1},
+    {"fieldname": "anmerkung", "fieldtype": "Small Text", "label": "Anmerkung"}
+  ],
+  "modified": "2026-06-24 00:00:00",
+  "modified_by": "Administrator",
+  "owner": "Administrator"
+}

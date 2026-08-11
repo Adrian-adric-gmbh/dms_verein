@@ -1,0 +1,32 @@
+{
+  "creation": "2026-06-26 00:00:00",
+  "doctype": "DocType",
+  "autoname": "hash",
+  "engine": "InnoDB",
+  "module": "Vereinsverwaltung",
+  "name": "Chat Nachricht",
+  "field_order": [
+    "konversation", "absender", "absender_name",
+    "inhalt_verschluesselt", "typ",
+    "anhang_url", "anhang_name", "geloescht"
+  ],
+  "fields": [
+    {"fieldname": "konversation", "fieldtype": "Link",
+     "options": "Chat Konversation", "label": "Konversation", "reqd": 1},
+    {"fieldname": "absender", "fieldtype": "Data",
+     "label": "Absender (E-Mail)", "reqd": 1},
+    {"fieldname": "absender_name", "fieldtype": "Data", "label": "Absender Name"},
+    {"fieldname": "inhalt_verschluesselt", "fieldtype": "Text",
+     "label": "Inhalt (verschlüsselt)"},
+    {"fieldname": "typ", "fieldtype": "Select",
+     "options": "Text\nBild\nDatei\nSystem",
+     "label": "Typ", "default": "Text"},
+    {"fieldname": "anhang_url", "fieldtype": "Data", "label": "Anhang URL"},
+    {"fieldname": "anhang_name", "fieldtype": "Data", "label": "Anhang Name"},
+    {"fieldname": "geloescht", "fieldtype": "Check",
+     "label": "Gelöscht", "default": "0"}
+  ],
+  "modified": "2026-06-26 00:00:00",
+  "modified_by": "Administrator",
+  "owner": "Administrator"
+}

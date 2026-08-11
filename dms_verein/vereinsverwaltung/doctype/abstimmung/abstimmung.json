@@ -1,0 +1,27 @@
+{
+  "name": "Abstimmung",
+  "doctype": "DocType",
+  "module": "Vereinsverwaltung",
+  "autoname": "format:VOTE-{YYYY}-{####}",
+  "fields": [
+    {"fieldname": "titel", "fieldtype": "Data", "label": "Titel", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "beschreibung", "fieldtype": "Small Text", "label": "Beschreibung"},
+    {"fieldname": "col_break1", "fieldtype": "Column Break"},
+    {"fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "Entwurf\nAktiv\nBeendet", "default": "Entwurf", "in_list_view": 1},
+    {"fieldname": "sec_break1", "fieldtype": "Section Break", "label": "Zeitraum & Zielgruppe"},
+    {"fieldname": "datum_von", "fieldtype": "Date", "label": "Abstimmung von", "reqd": 1},
+    {"fieldname": "datum_bis", "fieldtype": "Date", "label": "Abstimmung bis", "reqd": 1},
+    {"fieldname": "col_break2", "fieldtype": "Column Break"},
+    {"fieldname": "sparte", "fieldtype": "Link", "label": "Sparte (leer = alle)", "options": "Sparte"},
+    {"fieldname": "nur_stimmberechtigt", "fieldtype": "Check", "label": "Nur abstimmungsberechtigte Mitglieder", "default": 1},
+    {"fieldname": "anonym", "fieldtype": "Check", "label": "Anonyme Abstimmung", "default": 1},
+    {"fieldname": "sec_break2", "fieldtype": "Section Break", "label": "Fragen"},
+    {"fieldname": "fragen_json", "fieldtype": "Code", "label": "Fragen (JSON)", "options": "JSON"}
+  ],
+  "permissions": [
+    {"role": "Vereins Admin", "read": 1, "write": 1, "create": 1, "delete": 1},
+    {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+    {"role": "Vorstand", "read": 1, "write": 1, "create": 1},
+    {"role": "Spartenleiter", "read": 1}
+  ]
+}
