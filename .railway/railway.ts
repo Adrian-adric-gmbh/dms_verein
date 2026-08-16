@@ -36,8 +36,10 @@ export default defineRailway(() => {
     // Ohne diese Flags fsync't MariaDB bei jedem einzelnen Commit auf das
     // netzwerkgebundene Volume; das macht "bench new-site" (hunderte einzelne
     // DocType-Migrationen) extrem langsam (>40 Minuten statt 1-3 Minuten).
+    // docker-entrypoint.sh muss vorangestellt bleiben, sonst laeuft mysqld als
+    // root (Init/Privileg-Drop wird sonst uebersprungen -> Absturz).
     start:
-      "mysqld --innodb-flush-log-at-trx-commit=2 --sync-binlog=0 --innodb-buffer-pool-size=512M --skip-name-resolve",
+      "docker-entrypoint.sh mysqld --innodb-flush-log-at-trx-commit=2 --sync-binlog=0 --innodb-buffer-pool-size=512M --skip-name-resolve",
     env: {
       MARIADB_ROOT_PASSWORD: requiredEnvironment("DMS_RAILWAY_DB_ROOT_PASSWORD"),
       MARIADB_AUTO_UPGRADE: "1",
