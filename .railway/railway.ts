@@ -33,6 +33,11 @@ export default defineRailway(() => {
     volumeMounts: {
       "/var/lib/mysql": databaseData,
     },
+    // Ohne diese Flags fsync't MariaDB bei jedem einzelnen Commit auf das
+    // netzwerkgebundene Volume; das macht "bench new-site" (hunderte einzelne
+    // DocType-Migrationen) extrem langsam (>40 Minuten statt 1-3 Minuten).
+    start:
+      "mysqld --innodb-flush-log-at-trx-commit=2 --sync-binlog=0 --innodb-buffer-pool-size=512M --skip-name-resolve",
     env: {
       MARIADB_ROOT_PASSWORD: requiredEnvironment("DMS_RAILWAY_DB_ROOT_PASSWORD"),
       MARIADB_AUTO_UPGRADE: "1",
@@ -45,7 +50,7 @@ export default defineRailway(() => {
     healthcheck: "/api/method/dms_verein.api.health.check",
     // Grosszuegig: "bench new-site" (einmaliger Erstboot mit leerem Volume) migriert
     // frappe+erpnext+dms_verein Doctypes und kann deutlich laenger als 5 Minuten dauern.
-    healthcheckTimeout: 1800,
+    healthcheckTimeout: 3600,
     regions: { [region]: 1 },
     volumeMounts: {
       "/home/frappe/frappe-bench/sites": sites,
