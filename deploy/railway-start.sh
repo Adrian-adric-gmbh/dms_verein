@@ -25,6 +25,12 @@ fi
 cd /home/frappe/frappe-bench
 
 mkdir -p sites
+# Railways Volume ist wirklich leer -- anders als ein Docker-Named-Volume kopiert
+# es den gebackenen Image-Inhalt nicht vor (kein "copy-up"); ohne diese Datei
+# schlaegt "bench set-config -g" mit FileNotFoundError fehl.
+if [[ ! -f sites/common_site_config.json ]]; then
+	echo '{}' > sites/common_site_config.json
+fi
 ls -1 apps > sites/apps.txt
 
 bench set-config -g db_host "$DB_HOST"
