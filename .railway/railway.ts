@@ -7,7 +7,6 @@ import {
   project,
   redis,
   service,
-  volume,
 } from "railway/iac";
 
 const GITHUB_REPO = "Adrian-adric-gmbh/dms_verein";
@@ -23,16 +22,16 @@ function requiredEnvironment(name: string): string {
 export default defineRailway(() => {
   const cache = redis("redis");
   const region = "europe-west4-drams3a"; // EU West Metal (Amsterdam)
-  const sites = volume("frappe-sites", { region, sizeMB: 5000 });
-  const databaseData = volume("mariadb-data", { region, sizeMB: 5000 });
+  // Volumes werden bewusst NICHT hier deklariert: Die IaC gleicht vorhandene
+  // Volumes nicht ab, sondern legt sie bei jedem "config apply" neu (leer) an
+  // (-> Datenverlust). Persistente Volumes werden stattdessen im Railway-Dashboard
+  // an mariadb (/var/lib/mysql) und frappe (/home/frappe/frappe-bench/sites)
+  // angehaengt und dort verwaltet.
   const database = service("mariadb", {
     source: image("mariadb:10.11", {
       autoUpdates: { type: "patch" },
     }),
     regions: { [region]: 1 },
-    volumeMounts: {
-      "/var/lib/mysql": databaseData,
-    },
     // Ohne diese Flags fsync't MariaDB bei jedem einzelnen Commit auf das
     // netzwerkgebundene Volume; das macht "bench new-site" (hunderte einzelne
     // DocType-Migrationen) extrem langsam (>40 Minuten statt 1-3 Minuten).
@@ -54,9 +53,6 @@ export default defineRailway(() => {
     // frappe+erpnext+dms_verein Doctypes und kann deutlich laenger als 5 Minuten dauern.
     healthcheckTimeout: 3600,
     regions: { [region]: 1 },
-    volumeMounts: {
-      "/home/frappe/frappe-bench/sites": sites,
-    },
     env: {
       RAILWAY_DOCKERFILE_PATH: "deploy/railway-app.Dockerfile",
       SITE_NAME: "dms.internal",
@@ -77,8 +73,8 @@ export default defineRailway(() => {
 
   return project("dms-verein", {
     resources: [
-      group("Anwendung", [app, sites]),
-      group("Daten", [database, databaseData, cache]),
+      group("Anwendung", [app]),
+      group("Daten", [database, cache]),
     ],
   });
 });
