@@ -22,12 +22,14 @@ function requiredEnvironment(name: string): string {
 
 export default defineRailway(() => {
   const cache = redis("redis");
-  const sites = volume("frappe-sites", { region: "us-west2", sizeMB: 5000 });
-  const databaseData = volume("mariadb-data", { region: "us-west2", sizeMB: 5000 });
+  const region = "europe-west4-drams3a"; // EU West Metal (Amsterdam)
+  const sites = volume("frappe-sites", { region, sizeMB: 5000 });
+  const databaseData = volume("mariadb-data", { region, sizeMB: 5000 });
   const database = service("mariadb", {
     source: image("mariadb:10.11", {
       autoUpdates: { type: "patch" },
     }),
+    regions: { [region]: 1 },
     volumeMounts: {
       "/var/lib/mysql": databaseData,
     },
@@ -42,6 +44,7 @@ export default defineRailway(() => {
     start: "dms-railway-start",
     healthcheck: "/api/method/dms_verein.api.health.check",
     healthcheckTimeout: 300,
+    regions: { [region]: 1 },
     volumeMounts: {
       "/home/frappe/frappe-bench/sites": sites,
     },
@@ -67,6 +70,7 @@ export default defineRailway(() => {
     source: github(GITHUB_REPO, { branch: "main" }),
     healthcheck: "/health",
     healthcheckTimeout: 30,
+    regions: { [region]: 1 },
     env: {
       RAILWAY_DOCKERFILE_PATH: "deploy/railway-gateway.Dockerfile",
       FRAPPE_UPSTREAM: app.env.RAILWAY_PRIVATE_DOMAIN,
