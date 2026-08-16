@@ -46,7 +46,7 @@ Voraussetzungen sind Docker, Node.js und ein Railway-Konto. Danach aus dem Repos
 
 Railway baut aus dem GitHub-Repository. Deshalb müssen alle Änderungen vor dem Aufruf committed und nach
 `main` gepusht sein. Bei einem privaten Repository muss Railway in den GitHub-Integrationen Zugriff auf
-`saschafo/dms_verein` erhalten.
+das in [.railway/railway.ts](../.railway/railway.ts) hinterlegte Repository (`GITHUB_REPO`) erhalten.
 
 Das Script meldet sich bei Railway an, verknüpft beziehungsweise erstellt ein Projekt, fragt das interne
 Zugangskennwort und das Frappe-Administrator-Kennwort ab, zeigt den Infrastrukturplan und legt nach

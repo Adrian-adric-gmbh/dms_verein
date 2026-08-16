@@ -3,11 +3,14 @@ import {
   github,
   group,
   image,
+  preserve,
   project,
   redis,
   service,
   volume,
 } from "railway/iac";
+
+const GITHUB_REPO = "Adrian-adric-gmbh/dms_verein";
 
 function requiredEnvironment(name: string): string {
   const value = process.env[name];
@@ -19,8 +22,8 @@ function requiredEnvironment(name: string): string {
 
 export default defineRailway(() => {
   const cache = redis("redis");
-  const sites = volume("frappe-sites", { sizeMB: 5000 });
-  const databaseData = volume("mariadb-data", { sizeMB: 5000 });
+  const sites = volume("frappe-sites", { region: "us-west2", sizeMB: 5000 });
+  const databaseData = volume("mariadb-data", { region: "us-west2", sizeMB: 5000 });
   const database = service("mariadb", {
     source: image("mariadb:10.11", {
       autoUpdates: { type: "patch" },
@@ -35,7 +38,7 @@ export default defineRailway(() => {
   });
 
   const app = service("frappe", {
-    source: github("saschafo/dms_verein", { branch: "main" }),
+    source: github(GITHUB_REPO, { branch: "main" }),
     start: "dms-railway-start",
     healthcheck: "/api/method/dms_verein.api.health.check",
     healthcheckTimeout: 300,
@@ -55,11 +58,13 @@ export default defineRailway(() => {
       GUNICORN_WORKERS: "2",
       GUNICORN_THREADS: "4",
       GUNICORN_TIMEOUT: "120",
+      // Wird erst nach dem Apply per "railway variable set" gesetzt (siehe deploy-railway.sh)
+      PUBLIC_HOST: preserve(),
     },
   });
 
   const gateway = service("gateway", {
-    source: github("saschafo/dms_verein", { branch: "main" }),
+    source: github(GITHUB_REPO, { branch: "main" }),
     healthcheck: "/health",
     healthcheckTimeout: 30,
     env: {
