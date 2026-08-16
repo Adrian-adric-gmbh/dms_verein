@@ -26,16 +26,6 @@ fi
 cd /home/frappe/frappe-bench
 
 mkdir -p sites
-# Diagnose: zeigt, ob das Railway-Volume wirklich unter sites/ gemountet ist.
-echo "=== VOLUME-DIAGNOSE ==="
-df -h /home/frappe/frappe-bench/sites 2>&1 || true
-echo "--- mount ---"
-mount 2>/dev/null | grep -E "frappe-bench/sites" || echo "(kein eigener Mount auf sites/ gefunden)"
-echo "--- Inhalt sites/ ---"
-ls -la sites/ 2>&1 | head -20
-echo "--- site_config vorhanden? ---"
-ls -la "sites/$SITE_NAME/site_config.json" 2>&1 || echo "(fehlt)"
-echo "=== ENDE DIAGNOSE ==="
 # Railways Volume ist wirklich leer -- anders als ein Docker-Named-Volume kopiert
 # es den gebackenen Image-Inhalt nicht vor (kein "copy-up"); ohne diese Datei
 # schlaegt "bench set-config -g" mit FileNotFoundError fehl.

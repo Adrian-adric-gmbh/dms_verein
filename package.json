@@ -1,8 +1,0 @@
-{
-  "name": "dms-verein-railway-config",
-  "private": true,
-  "type": "module",
-  "devDependencies": {
-    "railway": "3.10.0"
-  }
-}
