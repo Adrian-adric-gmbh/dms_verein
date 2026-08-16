@@ -53,8 +53,11 @@ Zugangskennwort und das Frappe-Administrator-Kennwort ab, zeigt den Infrastruktu
 Bestätigung den Stack an. Kennwörter werden nicht in Dateien geschrieben. Der erste Build kann wegen des
 Frappe-Basisimages mehrere Minuten dauern.
 
-Die Infrastruktur ist in [.railway/railway.ts](../.railway/railway.ts) definiert. Railway Infrastructure
-as Code ist derzeit experimentell; vor jedem `apply` deshalb den angezeigten Plan prüfen.
+Die Infrastruktur ist in [.railway/railway.ts](../.railway/railway.ts) definiert. Zum Auswerten dieser
+Datei installiert das Script bei Bedarf einmalig die Railway-TypeScript-SDK über das [package.json](../package.json)
+im Repository-Root (`npm install`). Das erzeugte `node_modules` wird von Git ignoriert und ist nicht Teil
+des Docker-Build-Kontexts. Railway Infrastructure as Code ist derzeit experimentell; vor jedem `apply`
+deshalb den angezeigten Plan prüfen.
 
 ## Railway-Architektur
 

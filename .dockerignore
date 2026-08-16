@@ -8,4 +8,6 @@
 dms_verein/frontend
 dms_verein/public/screenshots
 docs
+package.json
+package-lock.json
 *.log

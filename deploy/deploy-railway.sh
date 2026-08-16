@@ -23,6 +23,11 @@ if ! command -v node >/dev/null 2>&1; then
 	exit 1
 fi
 
+if [[ ! -d node_modules/railway ]]; then
+	echo "Installiere die Railway-TypeScript-SDK für 'railway config plan/apply' ..."
+	npm install --no-audit --no-fund
+fi
+
 railway() {
 	npx --yes @railway/cli@latest "$@"
 }
