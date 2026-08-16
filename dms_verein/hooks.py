@@ -124,8 +124,10 @@ role_home_page = {
 # Desk Notifications
 # ------------------
 # See frappe.core.notifications.get_notification_config
-
-# notification_config = "dms_verein.notifications.get_notification_config"
+# Muss definiert bleiben (auch leer): fehlt dieser Hook in ALLEN installierten
+# Apps, ist "hooks.notification_config" None und frappe.desk.notifications
+# bricht mit TypeError ab (Frappe-Core-Bug, siehe notifications.py).
+notification_config = "dms_verein.notifications.get_notification_config"
 
 # Permissions
 # -----------
