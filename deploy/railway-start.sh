@@ -87,6 +87,14 @@ else
 	bench --site "$SITE_NAME" migrate
 fi
 
+echo "=== DEBUG: DocTypes mit fehlendem Modul ==="
+mysql --host="$DB_HOST" --port="$DB_PORT" --user="$DB_ROOT_USER" --password="$DB_ROOT_PASSWORD" \
+	--batch -e "SELECT name, module FROM \`$SITE_DB_NAME\`.tabDocType WHERE module IS NULL OR module='' LIMIT 30" 2>&1 || true
+echo "=== DEBUG: Module Def ohne passenden App-Eintrag ==="
+mysql --host="$DB_HOST" --port="$DB_PORT" --user="$DB_ROOT_USER" --password="$DB_ROOT_PASSWORD" \
+	--batch -e "SELECT name, app_name FROM \`$SITE_DB_NAME\`.\`tabModule Def\`" 2>&1 || true
+echo "=== DEBUG ENDE ==="
+
 # nginx liefert /assets aus sites/assets aus. bench verlinkt dort frappe/erpnext,
 # aber nicht dms_verein (dessen Vue-SPA ist vorgebaut, kein "bench build" im
 # Runtime-Image). Daher den Symlink hier explizit auf dem Volume anlegen.
