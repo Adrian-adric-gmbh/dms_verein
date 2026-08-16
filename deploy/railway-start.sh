@@ -71,6 +71,12 @@ else
 	bench --site "$SITE_NAME" migrate
 fi
 
+# nginx liefert /assets aus sites/assets aus. bench verlinkt dort frappe/erpnext,
+# aber nicht dms_verein (dessen Vue-SPA ist vorgebaut, kein "bench build" im
+# Runtime-Image). Daher den Symlink hier explizit auf dem Volume anlegen.
+mkdir -p sites/assets
+ln -sfn /home/frappe/frappe-bench/apps/dms_verein/dms_verein/public sites/assets/dms_verein
+
 bench use "$SITE_NAME"
 bench --site "$SITE_NAME" set-config host_name "${PUBLIC_SCHEME}://${PUBLIC_HOST:-$SITE_NAME}"
 bench --site "$SITE_NAME" enable-scheduler
