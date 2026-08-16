@@ -14,6 +14,7 @@ if [[ "$(id -u)" == "0" ]]; then
 fi
 
 : "${SITE_NAME:=dms.internal}"
+: "${SITE_DB_NAME:=dms_verein}"
 : "${DB_HOST:?DB_HOST fehlt}"
 : "${DB_PORT:=3306}"
 : "${DB_ROOT_USER:=root}"
@@ -55,8 +56,23 @@ for attempt in $(seq 1 60); do
 done
 
 if [[ ! -f "sites/$SITE_NAME/site_config.json" ]]; then
+	# Schutz vor Datenverlust: Wenn die Datenbank bereits Daten enthaelt, aber die
+	# site_config.json fehlt (z. B. Volume nicht gemountet), NICHT stillschweigend
+	# eine leere Site anlegen -- lieber laut abbrechen, damit die Volume-Anbindung
+	# geprueft wird.
+	table_count="$(mysql --host="$DB_HOST" --port="$DB_PORT" --user="$DB_ROOT_USER" \
+		--password="$DB_ROOT_PASSWORD" --batch --skip-column-names \
+		-e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='$SITE_DB_NAME'" 2>/dev/null || echo 0)"
+	if [[ "${table_count:-0}" -gt 0 ]]; then
+		echo "ABBRUCH: Datenbank '$SITE_DB_NAME' enthaelt bereits $table_count Tabellen," >&2
+		echo "aber sites/$SITE_NAME/site_config.json fehlt. Es wird KEINE neue Site" >&2
+		echo "angelegt, um vorhandene Daten nicht zu verlieren. Bitte die Anbindung des" >&2
+		echo "Volumes 'frappe-sites' pruefen (railway volume list / config apply)." >&2
+		exit 1
+	fi
 	echo "Erstelle Frappe-Site $SITE_NAME ..."
 	bench new-site "$SITE_NAME" \
+		--db-name "$SITE_DB_NAME" \
 		--db-host "$DB_HOST" \
 		--db-port "$DB_PORT" \
 		--db-root-username "$DB_ROOT_USER" \
