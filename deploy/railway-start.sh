@@ -1,6 +1,18 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
+# Railway mountet persistente Volumes root-eigentuemerisch; einmalig korrigieren
+# und danach als frappe weiterlaufen (bench darf nicht als root ausgefuehrt werden).
+if [[ "$(id -u)" == "0" ]]; then
+	mkdir -p /home/frappe/frappe-bench/sites
+	chown -R frappe:frappe /home/frappe/frappe-bench/sites
+	# Docker legt stdout/stderr root-eigentuemerisch an, wenn der Container als root
+	# startet; ohne diesen chown kann nginx seine auf /dev/stdout bzw. /dev/stderr
+	# verlinkten Logdateien als frappe nicht mehr oeffnen.
+	chown frappe /proc/self/fd/1 /proc/self/fd/2
+	exec gosu frappe "$0"
+fi
+
 : "${SITE_NAME:=dms.internal}"
 : "${DB_HOST:?DB_HOST fehlt}"
 : "${DB_PORT:=3306}"

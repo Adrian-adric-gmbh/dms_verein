@@ -3,7 +3,7 @@ FROM frappe/erpnext:v16
 USER root
 
 RUN apt-get update \
-	&& apt-get install --no-install-recommends -y redis-tools \
+	&& apt-get install --no-install-recommends -y redis-tools gosu \
 	&& rm -rf /var/lib/apt/lists/*
 
 COPY --chown=frappe:frappe . /home/frappe/frappe-bench/apps/dms_verein
@@ -15,7 +15,9 @@ RUN chmod 755 /usr/local/bin/dms-railway-start \
 	&& ln -sfn /home/frappe/frappe-bench/apps/dms_verein/dms_verein/public /home/frappe/frappe-bench/assets/dms_verein \
 	&& chown -h frappe:frappe /home/frappe/frappe-bench/assets/dms_verein
 
-USER frappe
+# Bleibt root: Railway mountet Volumes root-eigentümerisch, railway-start.sh
+# korrigiert die Rechte und wechselt selbst zu frappe.
+USER root
 WORKDIR /home/frappe/frappe-bench
 
 CMD ["dms-railway-start"]
