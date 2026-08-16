@@ -43,7 +43,9 @@ export default defineRailway(() => {
     source: github(GITHUB_REPO, { branch: "main" }),
     start: "dms-railway-start",
     healthcheck: "/api/method/dms_verein.api.health.check",
-    healthcheckTimeout: 300,
+    // Grosszuegig: "bench new-site" (einmaliger Erstboot mit leerem Volume) migriert
+    // frappe+erpnext+dms_verein Doctypes und kann deutlich laenger als 5 Minuten dauern.
+    healthcheckTimeout: 1800,
     regions: { [region]: 1 },
     volumeMounts: {
       "/home/frappe/frappe-bench/sites": sites,
