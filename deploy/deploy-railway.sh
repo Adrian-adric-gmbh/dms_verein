@@ -55,8 +55,18 @@ if [[ ${#access_password} -lt 16 || ${#admin_password} -lt 16 ]]; then
 fi
 
 password_hash="$(docker run --rm caddy:2.10-alpine caddy hash-password --plaintext "$access_password")"
-database_password="$(openssl rand -hex 32)"
 unset access_password
+
+# MariaDB uebernimmt MARIADB_ROOT_PASSWORD nur beim allerersten Start eines leeren
+# Volumes; bei jedem Aufruf ein neues Passwort zu generieren wuerde es vom echten,
+# im Volume eingefrorenen Root-Passwort abdriften lassen. Deshalb einmalig erzeugen
+# und lokal (git-ignoriert) persistieren.
+db_password_file="deploy/.env.railway-db-password"
+if [[ ! -f "$db_password_file" ]]; then
+	umask 077
+	openssl rand -hex 32 > "$db_password_file"
+fi
+database_password="$(cat "$db_password_file")"
 
 export DMS_RAILWAY_ACCESS_USER="$access_user"
 export DMS_RAILWAY_ACCESS_PASSWORD_HASH="$password_hash"

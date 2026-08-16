@@ -27,6 +27,7 @@ MANIFEST
 .env
 .env.local
 deploy/.env.local
+deploy/.env.railway-db-password
 .venv
 env/
 venv/
