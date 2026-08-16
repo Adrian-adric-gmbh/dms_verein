@@ -15,6 +15,12 @@ def get_context(context):
     base_url = frappe.utils.get_url()
     path = frappe.request.path if frappe.request else ""
 
+    context.vereinsname = (
+        frappe.db.get_single_value("Vereins Konfiguration", "vereinsname")
+        if frappe.db.exists("Vereins Konfiguration", "Vereins Konfiguration")
+        else None
+    ) or "Mitgliederportal"
+
     if path.rstrip("/") == "/verein/produkt":
         context.og_title = "DMS Verein – Die digitale Vereinsplattform"
         context.og_description = (
