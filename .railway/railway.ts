@@ -75,22 +75,9 @@ export default defineRailway(() => {
     },
   });
 
-  const gateway = service("gateway", {
-    source: github(GITHUB_REPO, { branch: "main" }),
-    healthcheck: "/health",
-    healthcheckTimeout: 30,
-    regions: { [region]: 1 },
-    env: {
-      RAILWAY_DOCKERFILE_PATH: "deploy/railway-gateway.Dockerfile",
-      FRAPPE_UPSTREAM: app.env.RAILWAY_PRIVATE_DOMAIN,
-      INTERNAL_ACCESS_USER: requiredEnvironment("DMS_RAILWAY_ACCESS_USER"),
-      INTERNAL_ACCESS_PASSWORD_HASH: requiredEnvironment("DMS_RAILWAY_ACCESS_PASSWORD_HASH"),
-    },
-  });
-
   return project("dms-verein", {
     resources: [
-      group("Anwendung", [app, gateway, sites]),
+      group("Anwendung", [app, sites]),
       group("Daten", [database, databaseData, cache]),
     ],
   });

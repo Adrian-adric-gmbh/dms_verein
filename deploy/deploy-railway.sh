@@ -14,10 +14,6 @@ if git rev-parse --abbrev-ref '@{upstream}' >/dev/null 2>&1 \
 	exit 1
 fi
 
-if ! command -v docker >/dev/null 2>&1; then
-	echo "Docker wird benötigt, um den Caddy-Passwort-Hash zu erzeugen." >&2
-	exit 1
-fi
 if ! command -v node >/dev/null 2>&1; then
 	echo "Node.js wird für die Railway CLI benötigt." >&2
 	exit 1
@@ -42,20 +38,13 @@ if ! railway status >/dev/null 2>&1; then
 	railway init
 fi
 
-read -r -p "Interner Benutzername [verein]: " access_user
-access_user="${access_user:-verein}"
-read -r -s -p "Internes Zugangskennwort: " access_password
-echo
 read -r -s -p "Frappe-Administrator-Kennwort: " admin_password
 echo
 
-if [[ ${#access_password} -lt 16 || ${#admin_password} -lt 16 ]]; then
-	echo "Beide Kennwörter müssen mindestens 16 Zeichen lang sein." >&2
+if [[ ${#admin_password} -lt 16 ]]; then
+	echo "Das Kennwort muss mindestens 16 Zeichen lang sein." >&2
 	exit 1
 fi
-
-password_hash="$(docker run --rm caddy:2.10-alpine caddy hash-password --plaintext "$access_password")"
-unset access_password
 
 # MariaDB uebernimmt MARIADB_ROOT_PASSWORD nur beim allerersten Start eines leeren
 # Volumes; bei jedem Aufruf ein neues Passwort zu generieren wuerde es vom echten,
@@ -68,8 +57,6 @@ if [[ ! -f "$db_password_file" ]]; then
 fi
 database_password="$(cat "$db_password_file")"
 
-export DMS_RAILWAY_ACCESS_USER="$access_user"
-export DMS_RAILWAY_ACCESS_PASSWORD_HASH="$password_hash"
 export DMS_RAILWAY_ADMIN_PASSWORD="$admin_password"
 export DMS_RAILWAY_DB_ROOT_PASSWORD="$database_password"
 
@@ -87,14 +74,14 @@ fi
 railway config apply --yes
 
 echo
-echo "Erzeuge eine öffentliche Domain ausschließlich für den Passwort-Gateway ..."
-railway domain --service gateway || true
-railway variable set 'PUBLIC_HOST=${{gateway.RAILWAY_PUBLIC_DOMAIN}}' --service frappe
+echo "Erzeuge eine öffentliche Domain für den Frappe-Dienst ..."
+railway domain --service frappe || true
+railway variable set 'PUBLIC_HOST=${{frappe.RAILWAY_PUBLIC_DOMAIN}}' --service frappe
 
 echo
 echo "Deployment angestoßen. Status und Logs:"
 echo "  npx @railway/cli status"
 echo "  npx @railway/cli logs --service frappe"
-echo "  npx @railway/cli logs --service gateway"
 echo
-echo "Wichtig: Gib dem Service 'frappe' keine öffentliche Domain."
+echo "Hinweis: Der Passwort-Gateway ist derzeit deaktiviert; Frappe ist direkt"
+echo "über die oben erzeugte Domain erreichbar (Zugriff nur über Frappe-Login)."
