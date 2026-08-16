@@ -5,6 +5,35 @@ app_description = "Vereins- und Mitgliederverwaltung"
 app_email = "service@industrie-4-0.org"
 app_license = "mit"
 
+# TEMP-DEBUG: Diagnose fuer "Module {} not found" beim Request-Bootstrap.
+# Wird entfernt, sobald die Ursache gefunden ist.
+def _install_temp_debug_patch():
+	import sys
+
+	if getattr(sys.modules[__name__], "_debug_patch_installed", False):
+		return
+	import frappe.modules.utils as _mod_utils
+
+	_orig_get_module_app = _mod_utils.get_module_app
+
+	def _debug_get_module_app(module):
+		try:
+			return _orig_get_module_app(module)
+		except Exception:
+			print(f"=== TEMP-DEBUG get_module_app FAILED for module={module!r} ===", flush=True)
+			import traceback
+			traceback.print_stack()
+			raise
+
+	_mod_utils.get_module_app = _debug_get_module_app
+	sys.modules[__name__]._debug_patch_installed = True
+
+
+try:
+	_install_temp_debug_patch()
+except Exception as _e:
+	print(f"=== TEMP-DEBUG patch install failed: {_e!r} ===", flush=True)
+
 fixtures = [
     {"dt": "Role", "filters": [["name", "in", [
         "Vereins Admin", "Kassenwart", "Spartenleiter", "Vorstand", "Mitglied", "Blogger"
