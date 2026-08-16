@@ -210,7 +210,7 @@ role_home_page = {
 
 # Request Events
 # ----------------
-# before_request = ["dms_verein.utils.before_request"]
+before_request = ["dms_verein.security.enforce_internal_access"]
 # after_request = ["dms_verein.utils.after_request"]
 
 # Job Events

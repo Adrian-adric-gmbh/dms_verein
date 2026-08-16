@@ -25,6 +25,8 @@ MANIFEST
 
 # Environments
 .env
+.env.local
+deploy/.env.local
 .venv
 env/
 venv/

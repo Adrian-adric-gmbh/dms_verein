@@ -31,7 +31,7 @@
         </div>
       </div>
 
-      <div class="mt-6 text-center">
+      <div v-if="verein.oeffentlicheSeiteAktiv" class="mt-6 text-center">
         <RouterLink to="/" class="text-sm text-slate-500 hover:text-primary-600">← Zur Vereinsseite</RouterLink>
         <span class="mx-3 text-slate-300">·</span>
         <RouterLink to="/antrag" class="text-sm text-primary-600 hover:underline">Mitglied werden</RouterLink>

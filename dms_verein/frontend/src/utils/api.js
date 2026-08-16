@@ -73,6 +73,25 @@ export const api = {
     return result?.file_url || result?.message?.file_url || ''
   },
 
+  uploadPrivateFile: async (file) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('is_private', '1')
+    const result = await client.post('upload_file', formData)
+    return result?.file_url || result?.message?.file_url || ''
+  },
+
+  validateMitgliederImport: (file_url, portal_benutzer_anlegen, willkommensmail_senden) =>
+    client.post('dms_verein.api.import_mitglieder.validate_import', {
+      file_url,
+      portal_benutzer_anlegen: portal_benutzer_anlegen ? 1 : 0,
+      willkommensmail_senden: willkommensmail_senden ? 1 : 0,
+    }),
+  startMitgliederImport: (batch_name) =>
+    client.post('dms_verein.api.import_mitglieder.start_import', { batch_name }),
+  getMitgliederImportStatus: (batch_name) =>
+    client.post('dms_verein.api.import_mitglieder.get_import_status', { batch_name }),
+
   // Fotoalbum
   getAlbenListe: () => client.post('dms_verein.api.verein.get_alben_liste'),
   getAlbumDetail: (name) => client.post('dms_verein.api.verein.get_album_detail', { name }),
@@ -92,6 +111,7 @@ export const api = {
   createPortalBenutzer: (mitglied_name, send_welcome = 1) => client.post('dms_verein.api.verein.create_portal_benutzer', { mitglied_name, send_welcome }),
   setMitgliedRollen: (mitglied_name, rollen) => client.post('dms_verein.api.verein.set_mitglied_rollen', { mitglied_name, rollen: JSON.stringify(rollen) }),
   getAvailableRollen: () => client.post('dms_verein.api.verein.get_available_rollen'),
+  getMitgliedstypenAdmin: () => client.post('dms_verein.api.verein.get_mitgliedstypen_admin'),
 
   // Generische Frappe-Operationen
   getDoc: (doctype, name) => client.post('frappe.client.get', { doctype, name }),

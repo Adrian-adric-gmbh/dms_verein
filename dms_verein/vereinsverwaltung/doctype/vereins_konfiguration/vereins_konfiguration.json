@@ -25,6 +25,8 @@
   "website",
   "col3",
   "logo",
+  "sb_sichtbarkeit",
+  "oeffentliche_seite_aktiv",
   "tab_rechtlich",
   "registernummer",
   "amtsgericht",
@@ -64,6 +66,11 @@
   "sekundaerfarbe",
   "vereinsmotto",
   "willkommenstext",
+    "sb_begriffe",
+    "struktur_singular",
+    "struktur_plural",
+    "col_begriffe",
+    "struktur_leitung",
   "sb_externe_dienste",
   "google_maps_aktiv",
   "google_maps_key",
@@ -171,6 +178,18 @@
    "fieldname": "logo",
    "fieldtype": "Attach Image",
    "label": "Vereinslogo"
+  },
+  {
+   "fieldname": "sb_sichtbarkeit",
+   "fieldtype": "Section Break",
+   "label": "Sichtbarkeit"
+  },
+  {
+   "fieldname": "oeffentliche_seite_aktiv",
+   "fieldtype": "Check",
+   "label": "Öffentliche Vereinsseite aktiv",
+   "default": "1",
+   "description": "Wenn deaktiviert, werden Startseite, Antragsformular, Blog, Kalender und Produktseite ausgeblendet und Besucher direkt zum Login weitergeleitet. Login, Impressum und Datenschutzerklärung bleiben erreichbar. Portal und Admin-Bereich sind davon nicht betroffen."
   },
   {
    "fieldname": "tab_rechtlich",
@@ -369,6 +388,36 @@
    "fieldtype": "Text Editor",
    "label": "Willkommenstext (Portal)"
   },
+    {
+     "fieldname": "sb_begriffe",
+     "fieldtype": "Section Break",
+     "label": "Bezeichnungen der Organisationsstruktur"
+    },
+    {
+     "fieldname": "struktur_singular",
+     "fieldtype": "Data",
+     "label": "Bezeichnung (Singular)",
+     "default": "Sparte",
+     "description": "Zum Beispiel Sparte, Abteilung oder Familienstamm"
+    },
+    {
+     "fieldname": "struktur_plural",
+     "fieldtype": "Data",
+     "label": "Bezeichnung (Plural)",
+     "default": "Sparten",
+     "description": "Zum Beispiel Sparten, Abteilungen oder Familienstämme"
+    },
+    {
+     "fieldname": "col_begriffe",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "struktur_leitung",
+     "fieldtype": "Data",
+     "label": "Bezeichnung der Leitung",
+     "default": "Spartenleitung",
+     "description": "Zum Beispiel Spartenleitung, Abteilungsleitung oder Stammesleitung"
+    },
   {
    "fieldname": "sb_externe_dienste",
    "fieldtype": "Section Break",

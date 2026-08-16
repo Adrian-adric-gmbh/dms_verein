@@ -4,6 +4,7 @@ from frappe import _
 # Rollen-Konstanten (entsprechen den Fixtures in fixtures/role.json)
 ADMIN_ROLLEN = ["Vereins Admin", "System Manager"]
 ERWEITERTER_ZUGANG = ["Vereins Admin", "System Manager", "Kassenwart", "Vorstand", "Spartenleiter"]
+VERGEBBARE_ROLLEN = {"Vereins Admin", "Kassenwart", "Spartenleiter", "Vorstand", "Mitglied", "Blogger"}
 
 
 def _notify(doctype, action="update", name=None):
@@ -35,6 +36,10 @@ def get_verein_info():
         "logo": doc.logo,
         "vereinsmotto": doc.vereinsmotto,
         "willkommenstext": doc.willkommenstext,
+        "oeffentliche_seite_aktiv": doc.oeffentliche_seite_aktiv != 0,
+        "struktur_singular": doc.get("struktur_singular") or "Sparte",
+        "struktur_plural": doc.get("struktur_plural") or "Sparten",
+        "struktur_leitung": doc.get("struktur_leitung") or "Spartenleitung",
         "primaerfarbe": doc.primaerfarbe,
         "sekundaerfarbe": doc.sekundaerfarbe,
         "registernummer": doc.registernummer,
@@ -178,10 +183,17 @@ def submit_mitgliedsantrag(data):
     if not data.get("datenschutz_akzeptiert") or not data.get("satzung_akzeptiert"):
         frappe.throw(_("Bitte akzeptieren Sie Datenschutzerklärung und Satzung."))
 
+    erlaubte_felder = {
+        "anrede", "vorname", "nachname", "geburtsdatum", "geschlecht",
+        "strasse", "plz", "ort", "telefon", "mobil", "email",
+        "gewuenschter_mitgliedstyp", "sparte_wunsch", "sepa_gewuenscht",
+        "kontoinhaber", "iban", "bic", "datenschutz_akzeptiert",
+        "satzung_akzeptiert", "beitragsordnung_akzeptiert",
+    }
     antrag = frappe.new_doc("Mitgliedsantrag")
-    for key, val in data.items():
-        if hasattr(antrag, key):
-            setattr(antrag, key, val)
+    for key in erlaubte_felder:
+        if key in data:
+            setattr(antrag, key, data[key])
     antrag.insert(ignore_permissions=True)
     frappe.db.commit()
     _notify("Mitgliedsantrag", "neu", antrag.name)
@@ -263,7 +275,19 @@ def get_mitglied_detail(name):
     """Vollständiges Mitglied für Admin."""
     frappe.only_for(ERWEITERTER_ZUGANG)
     doc = frappe.get_doc("Mitglied", name)
-    return doc.as_dict()
+    rollen = set(frappe.get_roles())
+    if rollen.intersection(ADMIN_ROLLEN):
+        return doc.as_dict()
+
+    felder = [
+        "name", "mitgliedsnummer", "status", "mitgliedstyp", "eintrittsdatum",
+        "anrede", "vorname", "nachname", "geburtsdatum", "geschlecht",
+        "strasse", "hausnummer", "plz", "ort", "land", "email", "telefon",
+        "mobil", "foto", "sparten",
+    ]
+    if "Kassenwart" in rollen:
+        felder.extend(["bank_name", "iban", "bic", "sepa_mandat", "beitragsrechnungen"])
+    return {feld: doc.get(feld) for feld in felder}
 
 
 @frappe.whitelist()
@@ -408,6 +432,8 @@ def set_mitglied_rollen(mitglied_name, rollen):
     import json
     if isinstance(rollen, str):
         rollen = json.loads(rollen)
+    if not isinstance(rollen, list) or any(rolle not in VERGEBBARE_ROLLEN for rolle in rollen):
+        frappe.throw("Mindestens eine angeforderte Rolle darf nicht vergeben werden.", frappe.PermissionError)
     mitglied = frappe.get_doc("Mitglied", mitglied_name)
     if not mitglied.portal_benutzer:
         frappe.throw("Kein Portal-Benutzer verknüpft.")
@@ -421,7 +447,7 @@ def set_mitglied_rollen(mitglied_name, rollen):
 
 
 @frappe.whitelist()
-def get_mitgliedstypen():
+def get_mitgliedstypen_admin():
     """Beitragsklassen (Mitgliedstypen) für Dropdowns — alle inkl. inaktiver."""
     frappe.only_for(ERWEITERTER_ZUGANG)
     return frappe.get_all(

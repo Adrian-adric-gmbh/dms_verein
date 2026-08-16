@@ -31,7 +31,7 @@
       </nav>
       <!-- Bottom -->
       <div class="p-2 border-t border-slate-100 space-y-1 shrink-0">
-        <RouterLink to="/" custom v-slot="{ navigate }">
+        <RouterLink v-if="verein.oeffentlicheSeiteAktiv" to="/" custom v-slot="{ navigate }">
           <button @click="navigate"
             :class="['sidebar-link w-full', !sidebarOpen ? 'justify-center px-0' : '']"
             title="Zur Vereinsseite">
@@ -178,6 +178,7 @@ const ALL_NAV = [
 
 const navItems = computed(() =>
   ALL_NAV.filter(item => hasRole(...item.rollen))
+    .map(item => item.name === 'sparten' ? { ...item, label: verein.strukturPlural } : item)
     .map(item => item.name === 'chat'
       ? { ...item, badge: chatStore.unreadTotal > 0 ? chatStore.unreadTotal : null }
       : item)
@@ -185,6 +186,7 @@ const navItems = computed(() =>
 
 const titleMap = {
   'admin-dashboard': 'Dashboard', 'admin-mitglieder': 'Mitglieder',
+  'admin-mitglieder-import': 'Mitglieder importieren',
   'admin-mitglied-detail': 'Mitglied', 'admin-antraege': 'Mitgliedsanträge',
   'admin-sparten': 'Sparten', 'admin-events': 'Veranstaltungen',
   'admin-alben': 'Fotoalben', 'admin-vorstand': 'Vorstand',
@@ -196,7 +198,7 @@ const titleMap = {
   'portal-chat': 'Nachrichten',
 }
 
-const currentTitle = computed(() => titleMap[route.name] || 'Verwaltung')
+const currentTitle = computed(() => route.name === 'admin-sparten' ? verein.strukturPlural : titleMap[route.name] || 'Verwaltung')
 const initials = computed(() => (auth.user || '').split('@')[0].substring(0, 2).toUpperCase())
 
 async function doLogout() {

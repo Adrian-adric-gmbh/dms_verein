@@ -7,7 +7,7 @@
       <div>
         <h2 class="flex items-center gap-2">
           <span v-if="sparte?.icon" class="text-2xl">{{ sparte.icon }}</span>
-          {{ sparte?.name_sparte || 'Sparte' }}
+          {{ sparte?.name_sparte || verein.strukturSingular }}
         </h2>
         <p class="text-slate-500 text-sm mt-0.5">Interner Terminkalender</p>
       </div>
@@ -17,7 +17,7 @@
     <div v-else>
       <!-- Leitung -->
       <div v-if="leitung.length" class="card card-body mb-4">
-        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">Leitung</p>
+        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">{{ verein.strukturLeitung }}</p>
         <div class="flex flex-wrap gap-2">
           <span v-for="l in leitung" :key="l.mitglied"
             class="inline-flex items-center gap-1.5 bg-slate-100 rounded-full px-3 py-1 text-xs font-medium">
@@ -86,10 +86,12 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { RouterLink } from 'vue-router'
 import { api } from '@/utils/api'
+import { useVereinStore } from '@/stores/verein'
 import AppSpinner from '@/components/ui/AppSpinner.vue'
 import { ArrowLeft, Clock, MapPin } from 'lucide-vue-next'
 
 const route = useRoute()
+const verein = useVereinStore()
 const sparteName = route.params.name
 
 const loading  = ref(true)

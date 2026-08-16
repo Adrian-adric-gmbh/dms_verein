@@ -1,0 +1,11 @@
+.git
+.github
+.railway
+.vscode
+**/__pycache__
+**/*.pyc
+**/node_modules
+dms_verein/frontend
+dms_verein/public/screenshots
+docs
+*.log

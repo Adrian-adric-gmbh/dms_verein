@@ -8,7 +8,7 @@
     <div class="max-w-6xl mx-auto p-4 lg:p-8">
       <div class="flex flex-wrap gap-3 mb-6">
         <select v-model="filterSparte" @change="load" class="input w-48">
-          <option value="">Alle Sparten</option>
+          <option value="">Alle {{ verein.strukturPlural }}</option>
           <option v-for="s in sparten" :key="s.name" :value="s.name">{{ s.icon }} {{ s.name_sparte }}</option>
         </select>
       </div>
@@ -135,10 +135,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { api } from '@/utils/api'
+import { useVereinStore } from '@/stores/verein'
 import AppSpinner from '@/components/ui/AppSpinner.vue'
 import { ArrowLeft, MapPin, Clock, X, Calendar as CalendarIcon, Users } from 'lucide-vue-next'
 
 const events = ref([])
+const verein = useVereinStore()
 const sparten = ref([])
 const loading = ref(true)
 const selected = ref(null)

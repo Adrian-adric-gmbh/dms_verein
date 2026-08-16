@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="flex items-center justify-between mb-6">
-      <div><h2>Sparten</h2><p class="text-slate-500 mt-1">Abteilungen und Gruppen des Vereins</p></div>
-      <button @click="openCreate" class="btn btn-primary"><Plus :size="16" /> Neue Sparte</button>
+      <div><h2>{{ verein.strukturPlural }}</h2><p class="text-slate-500 mt-1">Gemeinschaften und Gruppen des Vereins</p></div>
+      <button @click="openCreate" class="btn btn-primary"><Plus :size="16" /> {{ verein.strukturSingular }} anlegen</button>
     </div>
 
     <AppSpinner v-if="loading" full-page />
     <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div v-if="!sparten.length" class="col-span-full card card-body text-center py-12 text-slate-400">Keine Sparten vorhanden.</div>
+      <div v-if="!sparten.length" class="col-span-full card card-body text-center py-12 text-slate-400">Keine {{ verein.strukturPlural }} vorhanden.</div>
       <div v-for="s in sparten" :key="s.name" class="card hover:shadow-md transition-shadow cursor-pointer overflow-hidden" @click="openDetail(s)">
         <div class="flex">
           <!-- Spartenbild: schmale Spalte links, volle Kartenhöhe -->
@@ -28,7 +28,7 @@
         </div>
       </div>
       <button @click="openCreate" class="card border-dashed border-2 border-slate-300 hover:border-primary-400 hover:bg-primary-50 transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-primary-600 p-8 rounded-xl">
-        <Plus :size="20" /> Sparte hinzufügen
+        <Plus :size="20" /> {{ verein.strukturSingular }} hinzufügen
       </button>
     </div>
 
@@ -59,7 +59,7 @@
             <div v-if="leitung().length" class="flex items-start gap-2 col-span-2">
               <span class="text-slate-400 shrink-0 mt-0.5"><Users :size="14"/></span>
               <div>
-                <p class="label text-xs mb-1">Leitung</p>
+                <p class="label text-xs mb-1">{{ verein.strukturLeitung }}</p>
                 <div class="flex flex-wrap gap-2">
                   <span v-for="l in leitung()" :key="l.mitglied"
                     class="inline-flex items-center gap-1.5 bg-slate-100 rounded-full px-3 py-1 text-xs font-medium">
@@ -119,11 +119,11 @@
     </AppModal>
 
     <!-- ── Edit Modal ────────────────────────────────────────────────────── -->
-    <AppModal :show="showEdit" title="Sparte bearbeiten" size="lg" @close="showEdit = false">
+    <AppModal :show="showEdit" :title="`${verein.strukturSingular} bearbeiten`" size="lg" @close="showEdit = false">
       <form @submit.prevent="saveEdit" class="space-y-4">
         <AppAlert v-if="formError" type="error" :message="formError" />
         <div class="form-group">
-          <label class="label">Spartenname (nicht änderbar)</label>
+          <label class="label">Name (nicht änderbar)</label>
           <input :value="editTarget?.name_sparte" class="input bg-slate-50 cursor-not-allowed" disabled />
         </div>
         <div class="grid grid-cols-2 gap-4">
@@ -188,7 +188,7 @@
         </div>
         <div class="form-group"><label class="label">Gründungsjahr</label><input v-model="editForm.gruendungsjahr" type="number" class="input" /></div>
         <div class="form-group"><label class="label">Beschreibung</label><textarea v-model="editForm.beschreibung" class="input h-20 resize-none" /></div>
-        <label class="flex items-center gap-2 cursor-pointer"><input v-model="editForm.aktiv" type="checkbox" :true-value="1" :false-value="0" class="w-4 h-4" /><span class="text-sm">Sparte aktiv</span></label>
+        <label class="flex items-center gap-2 cursor-pointer"><input v-model="editForm.aktiv" type="checkbox" :true-value="1" :false-value="0" class="w-4 h-4" /><span class="text-sm">Aktiv</span></label>
       </form>
       <template #footer>
         <button @click="showEdit = false" class="btn btn-secondary">Abbrechen</button>
@@ -198,11 +198,11 @@
     </AppModal>
 
     <!-- ── Create Modal ──────────────────────────────────────────────────── -->
-    <AppModal :show="showCreate" title="Neue Sparte anlegen" @close="showCreate = false">
+    <AppModal :show="showCreate" :title="`${verein.strukturSingular} anlegen`" @close="showCreate = false">
       <form @submit.prevent="createSparte" class="space-y-4">
         <AppAlert v-if="createError" type="error" :message="createError" />
         <div class="form-group">
-          <label class="label">Spartenname *</label>
+          <label class="label">Name *</label>
           <input v-model="newSparte.name_sparte" class="input" required />
         </div>
         <div class="form-group">
@@ -227,7 +227,7 @@
         <div v-else>
           <!-- Mitglied-Liste -->
           <div v-if="!mitgliederList.length" class="text-center py-6 text-slate-400 text-sm">
-            Noch keine Mitglieder in dieser Sparte.
+            Noch keine Mitglieder in dieser Zuordnung.
           </div>
 
           <div v-else class="space-y-2">
@@ -439,6 +439,7 @@
 import { ref, onMounted } from 'vue'
 import { api } from '@/utils/api'
 import { useAuthStore } from '@/stores/auth'
+import { useVereinStore } from '@/stores/verein'
 import AppSpinner from '@/components/ui/AppSpinner.vue'
 import AppModal from '@/components/ui/AppModal.vue'
 import AppAlert from '@/components/ui/AppAlert.vue'
@@ -448,6 +449,7 @@ import { RouterLink } from 'vue-router'
 import IconPicker from '@/components/ui/IconPicker.vue'
 
 const auth = useAuthStore()
+const verein = useVereinStore()
 
 const sparten = ref([])
 const loading = ref(true)
@@ -483,7 +485,7 @@ function leitung() {
 }
 
 function spartenleitungText(s) {
-  return s.spartenleiter ? 'Spartenleitung hinterlegt' : ''
+  return s.spartenleiter ? `${verein.strukturLeitung} hinterlegt` : ''
 }
 
 onMounted(() => load())

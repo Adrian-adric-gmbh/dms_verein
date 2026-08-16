@@ -6,7 +6,7 @@
         <RouterLink :to="`/admin/sparten`"
           class="flex items-center gap-2 text-slate-500 hover:text-slate-800 transition-colors text-sm">
           <ChevronLeft :size="18" />
-          Alle Sparten
+          Alle {{ verein.strukturPlural }}
         </RouterLink>
         <span class="text-slate-300">/</span>
         <span class="text-slate-700 font-medium text-sm">{{ sparte?.name_sparte || sparteName }}</span>
@@ -167,6 +167,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 import { useApi } from '@/utils/api'
+import { useVereinStore } from '@/stores/verein'
 import {
   ChevronLeft, ChevronUp, ChevronDown, Pencil, Trash2,
   Layers, Plus, Eye, Save, GripVertical,
@@ -177,6 +178,7 @@ import SpartenSektionenRenderer from '@/components/builder/SpartenSektionenRende
 
 const route = useRoute()
 const api = useApi()
+const verein = useVereinStore()
 const sparteName = computed(() => route.params.name)
 
 const sparte = ref(null)
@@ -197,8 +199,8 @@ const BLOCK_TYPEN = [
   { typ: 'Text',           icon: '📝', hint: 'Rich-Text Abschnitt' },
   { typ: 'Text & Bild',    icon: '🗂️', hint: 'Text neben Bild (2-spaltig)' },
   { typ: 'Bildergalerie',  icon: '🏞️', hint: 'Foto-Galerie Raster' },
-  { typ: 'Veranstaltungen',icon: '📅', hint: 'Nächste Events dieser Sparte' },
-  { typ: 'Kontaktkarte',   icon: '👤', hint: 'Spartenleiter-Kontakt' },
+  { typ: 'Veranstaltungen',icon: '📅', hint: 'Nächste zugeordnete Veranstaltungen' },
+  { typ: 'Kontaktkarte',   icon: '👤', hint: 'Kontakt der Leitung' },
   { typ: 'Trenner',        icon: '➖', hint: 'Optischer Abstandhalter' },
   { typ: 'HTML-Block',     icon: '🔧', hint: 'Freies HTML / Embed' },
 ]

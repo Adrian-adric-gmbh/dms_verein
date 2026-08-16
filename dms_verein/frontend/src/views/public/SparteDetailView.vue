@@ -144,7 +144,7 @@
                 <div class="text-lg font-bold text-slate-900">
                   {{ sparte.spartenleiter.vorname }} {{ sparte.spartenleiter.nachname }}
                 </div>
-                <div class="text-sm text-slate-500 mb-3">Spartenleiter</div>
+                <div class="text-sm text-slate-500 mb-3">{{ verein.strukturLeitung }}</div>
                 <div v-if="sparte.spartenleiter.email" class="flex items-center gap-2 text-sm text-primary-700">
                   <Mail :size="14" />
                   <a :href="`mailto:${sparte.spartenleiter.email}`">{{ sparte.spartenleiter.email }}</a>
@@ -205,8 +205,8 @@
     <!-- Nicht gefunden -->
     <div v-else class="max-w-xl mx-auto px-4 py-20 text-center">
       <div class="text-5xl mb-4">🔍</div>
-      <h2 class="text-2xl font-bold text-slate-800 mb-2">Sparte nicht gefunden</h2>
-      <p class="text-slate-500 mb-6">Diese Sparte existiert nicht oder ist nicht öffentlich.</p>
+      <h2 class="text-2xl font-bold text-slate-800 mb-2">{{ verein.strukturSingular }} nicht gefunden</h2>
+      <p class="text-slate-500 mb-6">Dieser Eintrag existiert nicht oder ist nicht öffentlich.</p>
       <RouterLink to="/" class="btn btn-primary">Zur Startseite</RouterLink>
     </div>
 

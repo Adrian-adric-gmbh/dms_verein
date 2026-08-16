@@ -5,9 +5,14 @@
         <h2>Mitglieder</h2>
         <p class="text-slate-500 mt-1">{{ total }} Mitglieder insgesamt</p>
       </div>
-      <button @click="showForm = true" class="btn btn-primary">
-        <Plus :size="16" /> Neues Mitglied
-      </button>
+      <div class="flex gap-2">
+        <RouterLink v-if="auth.isAdmin" to="/admin/mitglieder/import" class="btn btn-secondary">
+          <FileUp :size="16" /> Import
+        </RouterLink>
+        <button @click="showForm = true" class="btn btn-primary">
+          <Plus :size="16" /> Neues Mitglied
+        </button>
+      </div>
     </div>
 
     <!-- Filter -->
@@ -117,10 +122,12 @@ import AppSpinner from '@/components/ui/AppSpinner.vue'
 import AppModal from '@/components/ui/AppModal.vue'
 import MitgliedForm from '@/components/MitgliedForm.vue'
 import StatusBadge from '@/components/StatusBadge.vue'
-import { Plus, Search, Eye, ChevronLeft, ChevronRight } from 'lucide-vue-next'
+import { Plus, Search, Eye, ChevronLeft, ChevronRight, FileUp } from 'lucide-vue-next'
 import { useRealtimeRefresh } from '@/composables/useRealtimeRefresh'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
+const auth = useAuthStore()
 const mitglieder = ref([])
 const typen = ref([])
 const total = ref(0)
@@ -135,7 +142,7 @@ const showForm = ref(false)
 let searchTimer = null
 
 onMounted(async () => {
-  const [, t] = await Promise.all([loadMitglieder(), api.getMitgliedstypen()])
+  const [, t] = await Promise.all([loadMitglieder(), api.getMitgliedstypenAdmin()])
   typen.value = t || []
 })
 useRealtimeRefresh(['Mitglied'], () => loadMitglieder())

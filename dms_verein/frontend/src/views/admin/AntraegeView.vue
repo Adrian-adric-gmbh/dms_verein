@@ -66,7 +66,7 @@
       <div class="space-y-3 text-sm">
         <div class="grid grid-cols-2 gap-4">
           <div><span class="text-slate-500">Typ:</span> <strong>{{ selected.gewuenschter_mitgliedstyp }}</strong></div>
-          <div><span class="text-slate-500">Sparte:</span> {{ selected.sparte_wunsch || '—' }}</div>
+          <div><span class="text-slate-500">{{ verein.strukturSingular }}:</span> {{ selected.sparte_wunsch || '—' }}</div>
           <div><span class="text-slate-500">Anrede:</span> {{ selected.anrede }}</div>
           <div><span class="text-slate-500">Geburtsdatum:</span> {{ formatDate(selected.geburtsdatum) }}</div>
           <div class="col-span-2"><span class="text-slate-500">Adresse:</span> {{ selected.strasse }}, {{ selected.plz }} {{ selected.ort }}</div>
@@ -108,6 +108,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useVereinStore } from '@/stores/verein'
 import { api } from '@/utils/api'
 import AppSpinner from '@/components/ui/AppSpinner.vue'
 import AppModal from '@/components/ui/AppModal.vue'
@@ -115,6 +116,7 @@ import StatusBadge from '@/components/StatusBadge.vue'
 import { Check, X } from 'lucide-vue-next'
 import { useRealtimeRefresh } from '@/composables/useRealtimeRefresh'
 
+const verein = useVereinStore()
 const antraege = ref([])
 const loading = ref(true)
 const filterStatus = ref('')

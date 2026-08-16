@@ -1,0 +1,12 @@
+:{$PORT:8080} {
+	handle /health {
+		respond "ok" 200
+	}
+
+	handle {
+		basic_auth {
+			{$INTERNAL_ACCESS_USER:verein} {$INTERNAL_ACCESS_PASSWORD_HASH}
+		}
+		reverse_proxy {$FRAPPE_UPSTREAM}:8080
+	}
+}

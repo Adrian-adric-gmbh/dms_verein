@@ -266,6 +266,31 @@
 
       <!-- Tab: Design & Portal -->
       <div v-show="activeTab === 'design'" class="space-y-6">
+        <!-- Sichtbarkeit -->
+        <div class="card">
+          <div class="card-header flex items-center justify-between gap-3">
+            <div>
+              <h3 class="text-base font-semibold">Öffentliche Vereinsseite</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Startseite, Antragsformular, Blog, Kalender und Produktseite</p>
+            </div>
+            <label class="flex items-center gap-2 cursor-pointer select-none">
+              <span class="text-sm font-medium" :class="form.oeffentliche_seite_aktiv ? 'text-green-700' : 'text-slate-400'">
+                {{ form.oeffentliche_seite_aktiv ? 'Aktiv' : 'Deaktiviert' }}
+              </span>
+              <div class="relative" @click="form.oeffentliche_seite_aktiv = form.oeffentliche_seite_aktiv ? 0 : 1">
+                <div :class="['w-11 h-6 rounded-full transition-colors', form.oeffentliche_seite_aktiv ? 'bg-green-500' : 'bg-slate-300']" />
+                <div :class="['absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform', form.oeffentliche_seite_aktiv ? 'translate-x-5' : '']" />
+              </div>
+            </label>
+          </div>
+          <div class="card-body">
+            <p class="text-sm text-slate-500">
+              Wenn deaktiviert, werden Besucher direkt zum Login weitergeleitet. Login, Impressum und
+              Datenschutzerklärung bleiben erreichbar. Mitgliederportal und Admin-Bereich sind davon nicht betroffen.
+            </p>
+          </div>
+        </div>
+
         <!-- Logo -->
         <div class="card">
           <div class="card-header"><h3 class="text-base font-semibold">Vereinslogo</h3></div>
@@ -424,6 +449,32 @@
               <textarea v-model="form.willkommenstext" class="input resize-y" style="min-height:120px"
                 placeholder="Herzlich willkommen im Mitgliederportal! Hier finden Sie alle wichtigen Informationen …" />
               <p class="text-xs text-slate-400 mt-1">Einfaches HTML ist erlaubt (z.B. &lt;b&gt;, &lt;a href=…&gt;).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header flex items-center justify-between gap-3">
+            <div>
+              <h3 class="text-base font-semibold">Organisationsstruktur</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Bezeichnungen für Gruppen innerhalb des Vereins</p>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" @click="applyFamilienverbandPreset">
+              Familienverband
+            </button>
+          </div>
+          <div class="card-body grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div class="form-group mb-0">
+              <label class="label">Singular</label>
+              <input v-model="form.struktur_singular" class="input" placeholder="Familienstamm" />
+            </div>
+            <div class="form-group mb-0">
+              <label class="label">Plural</label>
+              <input v-model="form.struktur_plural" class="input" placeholder="Familienstämme" />
+            </div>
+            <div class="form-group mb-0">
+              <label class="label">Leitung</label>
+              <input v-model="form.struktur_leitung" class="input" placeholder="Stammesleitung" />
             </div>
           </div>
         </div>
@@ -787,10 +838,22 @@ function applyColor(hex) {
   document.documentElement.style.setProperty('--color-primary-on-light', darkenToContrast(hex, 4.5))
 }
 
+function applyFamilienverbandPreset() {
+  form.value.struktur_singular = 'Familienstamm'
+  form.value.struktur_plural = 'Familienstämme'
+  form.value.struktur_leitung = 'Stammesleitung'
+}
+
 onMounted(async () => {
   try {
     const doc = await api.getDoc('Vereins Konfiguration', 'Vereins Konfiguration')
-    form.value = doc || {}
+    form.value = {
+      ...(doc || {}),
+      oeffentliche_seite_aktiv: doc?.oeffentliche_seite_aktiv ?? 1,
+      struktur_singular: doc?.struktur_singular || 'Sparte',
+      struktur_plural: doc?.struktur_plural || 'Sparten',
+      struktur_leitung: doc?.struktur_leitung || 'Spartenleitung',
+    }
   } catch {
     form.value = {}
   } finally {

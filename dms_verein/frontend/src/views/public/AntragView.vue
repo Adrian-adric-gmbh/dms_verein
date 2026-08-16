@@ -109,7 +109,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="label">Gewünschte Sparte (optional)</label>
+              <label class="label">Gewünschte Zuordnung: {{ verein.strukturSingular }} (optional)</label>
               <select v-model="form.sparte_wunsch" class="input">
                 <option value="">Keine Präferenz</option>
                 <option v-for="s in sparten" :key="s.name" :value="s.name">{{ s.icon }} {{ s.name_sparte }}</option>
@@ -173,7 +173,7 @@
               <p><span class="text-slate-500">Adresse:</span> {{ form.strasse }}, {{ form.plz }} {{ form.ort }}</p>
               <p><span class="text-slate-500">E-Mail:</span> {{ form.email }}</p>
               <p><span class="text-slate-500">Mitgliedstyp:</span> {{ form.gewuenschter_mitgliedstyp }}</p>
-              <p v-if="form.sparte_wunsch"><span class="text-slate-500">Sparte:</span> {{ form.sparte_wunsch }}</p>
+              <p v-if="form.sparte_wunsch"><span class="text-slate-500">{{ verein.strukturSingular }}:</span> {{ form.sparte_wunsch }}</p>
               <p><span class="text-slate-500">SEPA:</span> {{ form.sepa_gewuenscht ? 'Ja, ' + form.iban : 'Nein' }}</p>
             </div>
           </div>

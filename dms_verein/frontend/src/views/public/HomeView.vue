@@ -59,13 +59,13 @@
         <div class="flex items-center gap-3 mb-8">
           <Transition name="fade" mode="out-in">
             <div v-if="!selectedSparte" key="overview-head" class="w-full text-center">
-              <h2 class="mb-2">Unsere Sparten</h2>
-              <p class="text-slate-500">Entdecke, was wir zu bieten haben</p>
+              <h2 class="mb-2">Unsere {{ verein.strukturPlural }}</h2>
+              <p class="text-slate-500">Entdecke unsere Gemeinschaften</p>
             </div>
             <div v-else key="detail-head" class="flex items-center gap-3 w-full">
               <button @click="closeSparte"
                 class="flex items-center gap-1.5 text-sm text-slate-500 hover:text-primary-700 transition-colors shrink-0">
-                <ChevronLeft :size="16" /> Alle Sparten
+                <ChevronLeft :size="16" /> Alle {{ verein.strukturPlural }}
               </button>
               <div class="h-4 w-px bg-slate-300" />
               <span v-if="sparteData?.icon" class="text-2xl leading-none">{{ sparteData.icon }}</span>
@@ -114,7 +114,7 @@
                   {{ formatBetrag(sparteData.beitrag) }} {{ sparteData.beitrag_intervall }}
                 </span>
                 <span v-if="sparteData.beitrag_bezeichnung" class="text-primary-500">— {{ sparteData.beitrag_bezeichnung }}</span>
-                <span v-else class="text-primary-500">Spartenbeitrag (extra)</span>
+                <span v-else class="text-primary-500">Zusatzbeitrag</span>
               </div>
 
               <!-- Kurzbeschreibung wenn kein Held-Banner Block -->
@@ -218,7 +218,7 @@
                     </div>
                     <div>
                       <div class="font-semibold">{{ sparteData.spartenleiter.vorname }} {{ sparteData.spartenleiter.nachname }}</div>
-                      <div class="text-sm text-slate-500">Spartenleiter</div>
+                      <div class="text-sm text-slate-500">{{ verein.strukturLeitung }}</div>
                       <a v-if="sparteData.spartenleiter.email" :href="`mailto:${sparteData.spartenleiter.email}`"
                         class="text-sm text-primary-600 hover:underline">{{ sparteData.spartenleiter.email }}</a>
                     </div>
@@ -252,7 +252,7 @@
                   <p>{{ sparteData.gruendungsjahr }}</p>
                 </div>
                 <div v-if="sparteData.spartenleiter" class="bg-white rounded-xl p-4 border border-slate-200">
-                  <div class="font-semibold text-slate-800 mb-1 flex items-center gap-1.5"><User :size="13" /> Spartenleiter</div>
+                  <div class="font-semibold text-slate-800 mb-1 flex items-center gap-1.5"><User :size="13" /> {{ verein.strukturLeitung }}</div>
                   <p>{{ sparteData.spartenleiter.vorname }} {{ sparteData.spartenleiter.nachname }}</p>
                 </div>
               </div>

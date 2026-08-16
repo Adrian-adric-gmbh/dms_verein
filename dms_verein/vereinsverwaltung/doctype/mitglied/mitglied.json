@@ -10,6 +10,7 @@
   "field_order": [
     "tab_stammdaten",
     "mitgliedsnummer",
+    "externe_id",
     "status",
     "col_s1",
     "mitgliedstyp",
@@ -79,6 +80,13 @@
       "label": "Mitgliedsnummer",
       "read_only": 1,
       "in_list_view": 1
+    },
+    {
+      "fieldname": "externe_id",
+      "fieldtype": "Data",
+      "label": "Externe ID",
+      "unique": 1,
+      "read_only": 1
     },
     {
       "fieldname": "status",

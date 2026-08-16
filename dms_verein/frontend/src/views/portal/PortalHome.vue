@@ -52,10 +52,10 @@
         </RouterLink>
       </div>
 
-      <!-- Sparten -->
+      <!-- Organisationsstruktur -->
       <div class="mb-2 flex items-center justify-between">
-        <h3 class="text-base font-semibold">Sparten</h3>
-        <span class="text-xs text-slate-400">{{ sparten.length }} Sparte{{ sparten.length !== 1 ? 'n' : '' }}</span>
+        <h3 class="text-base font-semibold">{{ verein.strukturPlural }}</h3>
+        <span class="text-xs text-slate-400">{{ sparten.length }} {{ sparten.length === 1 ? verein.strukturSingular : verein.strukturPlural }}</span>
       </div>
       <div v-if="spartenLoading" class="flex justify-center py-8">
         <AppSpinner />
@@ -83,7 +83,7 @@
         </RouterLink>
       </div>
       <div v-else class="card card-body text-center text-slate-400 mb-6">
-        Keine Sparten vorhanden.
+        Keine {{ verein.strukturPlural }} vorhanden.
       </div>
     </template>
   </div>
@@ -92,11 +92,13 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { api } from '@/utils/api'
+import { useVereinStore } from '@/stores/verein'
 import AppSpinner from '@/components/ui/AppSpinner.vue'
 import { RouterLink } from 'vue-router'
 import { User, CreditCard, Calendar, Image, Vote, ChevronRight } from 'lucide-vue-next'
 
 const profil = ref(null)
+const verein = useVereinStore()
 const loading = ref(true)
 const sparten = ref([])
 const spartenLoading = ref(true)

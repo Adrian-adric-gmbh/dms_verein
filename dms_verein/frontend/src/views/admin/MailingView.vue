@@ -18,7 +18,7 @@
               <optgroup v-if="gruppen.mitgliedstypen?.length" label="Nach Beitragsklasse">
                 <option v-for="g in gruppen.mitgliedstypen" :key="g.key" :value="g.key">{{ g.label }}</option>
               </optgroup>
-              <optgroup v-if="gruppen.sparten?.length" label="Nach Sparte">
+              <optgroup v-if="gruppen.sparten?.length" :label="`Nach ${verein.strukturSingular}`">
                 <option v-for="g in gruppen.sparten" :key="g.key" :value="g.key">{{ g.label }}</option>
               </optgroup>
             </select>
@@ -128,11 +128,13 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { api } from '@/utils/api'
+import { useVereinStore } from '@/stores/verein'
 import AppAlert from '@/components/ui/AppAlert.vue'
 import { Send, Users, Info } from 'lucide-vue-next'
 
 const form = ref({ gruppe: 'mit_email', betreff: '', inhalt: '', test_empfaenger: '' })
 const gruppen = ref({ standard: [], mitgliedstypen: [], sparten: [] })
+const verein = useVereinStore()
 const vorschau = ref(null)
 const sending = ref(false)
 const sendResult = ref(null)

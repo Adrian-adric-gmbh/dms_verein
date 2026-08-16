@@ -1,0 +1,42 @@
+{
+  "creation": "2026-08-15 00:00:00",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "module": "Vereinsverwaltung",
+  "name": "Mitgliederimport",
+  "autoname": "format:IMPORT-{YYYY}-{#####}",
+  "title_field": "dateiname",
+  "field_order": [
+    "status", "datei", "dateiname", "datei_hash",
+    "sb_optionen", "portal_benutzer_anlegen", "willkommensmail_senden",
+    "sb_ergebnis", "gesamt", "gueltig", "vorhanden", "importiert", "fehleranzahl",
+    "bericht", "sb_audit", "gestartet_von", "gestartet_am", "abgeschlossen_am"
+  ],
+  "fields": [
+    {"fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "Validiert\nValidierung fehlgeschlagen\nEingeplant\nWird importiert\nAbgeschlossen\nAbgeschlossen mit Fehlern\nFehlgeschlagen", "read_only": 1, "in_list_view": 1},
+    {"fieldname": "datei", "fieldtype": "Attach", "label": "Private CSV-Datei", "read_only": 1},
+    {"fieldname": "dateiname", "fieldtype": "Data", "label": "Dateiname", "read_only": 1, "in_list_view": 1},
+    {"fieldname": "datei_hash", "fieldtype": "Data", "label": "SHA-256", "read_only": 1, "hidden": 1},
+    {"fieldname": "sb_optionen", "fieldtype": "Section Break", "label": "Optionen"},
+    {"fieldname": "portal_benutzer_anlegen", "fieldtype": "Check", "label": "Portal-Benutzer anlegen", "read_only": 1},
+    {"fieldname": "willkommensmail_senden", "fieldtype": "Check", "label": "Willkommensmail senden", "read_only": 1},
+    {"fieldname": "sb_ergebnis", "fieldtype": "Section Break", "label": "Ergebnis"},
+    {"fieldname": "gesamt", "fieldtype": "Int", "label": "Gesamt", "read_only": 1},
+    {"fieldname": "gueltig", "fieldtype": "Int", "label": "Gültig", "read_only": 1},
+    {"fieldname": "vorhanden", "fieldtype": "Int", "label": "Bereits vorhanden", "read_only": 1},
+    {"fieldname": "importiert", "fieldtype": "Int", "label": "Importiert", "read_only": 1},
+    {"fieldname": "fehleranzahl", "fieldtype": "Int", "label": "Fehler", "read_only": 1},
+    {"fieldname": "bericht", "fieldtype": "Long Text", "label": "Importbericht", "read_only": 1},
+    {"fieldname": "sb_audit", "fieldtype": "Section Break", "label": "Protokoll"},
+    {"fieldname": "gestartet_von", "fieldtype": "Link", "label": "Gestartet von", "options": "User", "read_only": 1},
+    {"fieldname": "gestartet_am", "fieldtype": "Datetime", "label": "Gestartet am", "read_only": 1},
+    {"fieldname": "abgeschlossen_am", "fieldtype": "Datetime", "label": "Abgeschlossen am", "read_only": 1}
+  ],
+  "permissions": [
+    {"role": "System Manager", "read": 1, "create": 1, "write": 1, "report": 1},
+    {"role": "Vereins Admin", "read": 1, "create": 1, "write": 1, "report": 1}
+  ],
+  "sort_field": "creation",
+  "sort_order": "DESC",
+  "track_changes": 1
+}

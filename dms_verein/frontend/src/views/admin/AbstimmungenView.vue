@@ -96,7 +96,7 @@
             <input v-model="form.datum_bis" type="date" class="input" />
           </div>
           <div class="form-group">
-            <label class="label">Sparte (leer = alle)</label>
+            <label class="label">{{ verein.strukturSingular }} (leer = alle)</label>
             <select v-model="form.sparte" class="input">
               <option value="">Alle Mitglieder</option>
               <option v-for="s in sparten" :key="s.name" :value="s.name">{{ s.name_sparte }}</option>
@@ -244,6 +244,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { api } from '@/utils/api'
+import { useVereinStore } from '@/stores/verein'
 import AppSpinner from '@/components/ui/AppSpinner.vue'
 import AppModal from '@/components/ui/AppModal.vue'
 import AppAlert from '@/components/ui/AppAlert.vue'
@@ -255,6 +256,7 @@ import { useRealtimeRefresh } from '@/composables/useRealtimeRefresh'
 const abstimmungen = ref([])
 const loading = ref(true)
 const sparten = ref([])
+const verein = useVereinStore()
 const showForm = ref(false)
 const showErgebnis = ref(false)
 const showDelete = ref(false)

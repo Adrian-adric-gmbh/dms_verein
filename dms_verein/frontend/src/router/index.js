@@ -1,5 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { useVereinStore } from '@/stores/verein'
+
+// Bleiben erreichbar, auch wenn die öffentliche Vereinsseite deaktiviert ist
+const OEFFENTLICH_TROTZ_DEAKTIVIERUNG = new Set(['login', 'impressum', 'datenschutz'])
 
 const router = createRouter({
   history: createWebHistory('/verein'),
@@ -49,6 +53,7 @@ const router = createRouter({
       children: [
         { path: '', name: 'admin-dashboard', component: () => import('@/views/admin/DashboardView.vue') },
         { path: 'mitglieder', name: 'admin-mitglieder', component: () => import('@/views/admin/MitgliederView.vue') },
+        { path: 'mitglieder/import', name: 'admin-mitglieder-import', component: () => import('@/views/admin/MitgliederImportView.vue'), meta: { requiresAdminOnly: true } },
         { path: 'mitglieder/:id', name: 'admin-mitglied-detail', component: () => import('@/views/admin/MitgliedDetailView.vue') },
         { path: 'antraege', name: 'admin-antraege', component: () => import('@/views/admin/AntraegeView.vue') },
         { path: 'sparten', name: 'admin-sparten', component: () => import('@/views/admin/SpartenView.vue') },
@@ -83,6 +88,19 @@ router.beforeEach(async (to) => {
   if (to.meta.requiresAdmin && !auth.canAccessAdmin) {
     return { name: 'home' }
   }
+  if (to.meta.requiresAdminOnly && !auth.isAdmin) {
+    return { name: 'admin-dashboard' }
+  }
+
+  // Öffentliche Vereinsseite kann in der Konfiguration deaktiviert werden
+  if (!to.meta.requiresAuth && !OEFFENTLICH_TROTZ_DEAKTIVIERUNG.has(to.name)) {
+    const verein = useVereinStore()
+    if (!verein.loaded) await verein.load()
+    if (!verein.oeffentlicheSeiteAktiv) {
+      return { name: 'login' }
+    }
+  }
+
   // Adminbereich nur auf Desktop (≥1024px) — auf Handy/Tablet immer Portal
   if (to.path.startsWith('/admin') && auth.isMitglied && window.innerWidth < 1024) {
     return { name: 'portal-home' }

@@ -1,10 +1,14 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { api } from '@/utils/api'
 
 export const useVereinStore = defineStore('verein', () => {
   const info = ref(null)
   const loaded = ref(false)
+  const strukturSingular = computed(() => info.value?.struktur_singular || 'Sparte')
+  const strukturPlural = computed(() => info.value?.struktur_plural || 'Sparten')
+  const strukturLeitung = computed(() => info.value?.struktur_leitung || 'Spartenleitung')
+  const oeffentlicheSeiteAktiv = computed(() => info.value?.oeffentliche_seite_aktiv !== false)
 
   function relativeLuminance(hex) {
     const c = hex.replace('#', '')
@@ -64,5 +68,5 @@ export const useVereinStore = defineStore('verein', () => {
     await load()
   }
 
-  return { info, loaded, load, reload, applyColors }
+  return { info, loaded, strukturSingular, strukturPlural, strukturLeitung, oeffentlicheSeiteAktiv, load, reload, applyColors }
 })

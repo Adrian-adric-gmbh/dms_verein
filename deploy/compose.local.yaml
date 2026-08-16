@@ -1,0 +1,71 @@
+name: dms-verein-local
+
+services:
+  mariadb:
+    image: mariadb:10.11
+    restart: unless-stopped
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    environment:
+      MARIADB_ROOT_PASSWORD: ${LOCAL_DB_ROOT_PASSWORD:?LOCAL_DB_ROOT_PASSWORD fehlt}
+      MARIADB_AUTO_UPGRADE: "1"
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  redis:
+    image: redis:7.4-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  frappe:
+    build:
+      context: ..
+      dockerfile: deploy/railway-app.Dockerfile
+    restart: unless-stopped
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      SITE_NAME: dms.localhost
+      DB_HOST: mariadb
+      DB_PORT: "3306"
+      DB_ROOT_USER: root
+      DB_ROOT_PASSWORD: ${LOCAL_DB_ROOT_PASSWORD:?LOCAL_DB_ROOT_PASSWORD fehlt}
+      REDIS_URL: redis://redis:6379
+      ADMIN_PASSWORD: ${LOCAL_ADMIN_PASSWORD:?LOCAL_ADMIN_PASSWORD fehlt}
+      PUBLIC_SCHEME: http
+      PUBLIC_HOST: localhost:${LOCAL_PORT:-8080}
+      PORT: "8080"
+      GUNICORN_WORKERS: "2"
+      GUNICORN_THREADS: "4"
+      GUNICORN_TIMEOUT: "120"
+    ports:
+      - "127.0.0.1:${LOCAL_PORT:-8080}:8080"
+    volumes:
+      - frappe-sites:/home/frappe/frappe-bench/sites
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://127.0.0.1:8080/api/method/dms_verein.api.health.check"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 10m
+
+volumes:
+  mariadb-data:
+  redis-data:
+  frappe-sites:

@@ -1,0 +1,79 @@
+import {
+  defineRailway,
+  github,
+  group,
+  image,
+  project,
+  redis,
+  service,
+  volume,
+} from "railway/iac";
+
+function requiredEnvironment(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`${name} fehlt. Bitte deploy/deploy-railway.sh verwenden.`);
+  }
+  return value;
+}
+
+export default defineRailway(() => {
+  const cache = redis("redis");
+  const sites = volume("frappe-sites", { sizeMB: 5000 });
+  const databaseData = volume("mariadb-data", { sizeMB: 5000 });
+  const database = service("mariadb", {
+    source: image("mariadb:10.11", {
+      autoUpdates: { type: "patch" },
+    }),
+    volumeMounts: {
+      "/var/lib/mysql": databaseData,
+    },
+    env: {
+      MARIADB_ROOT_PASSWORD: requiredEnvironment("DMS_RAILWAY_DB_ROOT_PASSWORD"),
+      MARIADB_AUTO_UPGRADE: "1",
+    },
+  });
+
+  const app = service("frappe", {
+    source: github("saschafo/dms_verein", { branch: "main" }),
+    start: "dms-railway-start",
+    healthcheck: "/api/method/dms_verein.api.health.check",
+    healthcheckTimeout: 300,
+    volumeMounts: {
+      "/home/frappe/frappe-bench/sites": sites,
+    },
+    env: {
+      RAILWAY_DOCKERFILE_PATH: "deploy/railway-app.Dockerfile",
+      SITE_NAME: "dms.internal",
+      DB_HOST: database.env.RAILWAY_PRIVATE_DOMAIN,
+      DB_PORT: "3306",
+      DB_ROOT_USER: "root",
+      DB_ROOT_PASSWORD: requiredEnvironment("DMS_RAILWAY_DB_ROOT_PASSWORD"),
+      REDIS_URL: cache.env.REDIS_URL,
+      ADMIN_PASSWORD: requiredEnvironment("DMS_RAILWAY_ADMIN_PASSWORD"),
+      PORT: "8080",
+      GUNICORN_WORKERS: "2",
+      GUNICORN_THREADS: "4",
+      GUNICORN_TIMEOUT: "120",
+    },
+  });
+
+  const gateway = service("gateway", {
+    source: github("saschafo/dms_verein", { branch: "main" }),
+    healthcheck: "/health",
+    healthcheckTimeout: 30,
+    env: {
+      RAILWAY_DOCKERFILE_PATH: "deploy/railway-gateway.Dockerfile",
+      FRAPPE_UPSTREAM: app.env.RAILWAY_PRIVATE_DOMAIN,
+      INTERNAL_ACCESS_USER: requiredEnvironment("DMS_RAILWAY_ACCESS_USER"),
+      INTERNAL_ACCESS_PASSWORD_HASH: requiredEnvironment("DMS_RAILWAY_ACCESS_PASSWORD_HASH"),
+    },
+  });
+
+  return project("dms-verein", {
+    resources: [
+      group("Anwendung", [app, gateway, sites]),
+      group("Daten", [database, databaseData, cache]),
+    ],
+  });
+});

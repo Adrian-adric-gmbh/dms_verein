@@ -74,7 +74,7 @@
                   <span v-if="sparte.beitrag_bezeichnung" class="text-primary-600 ml-1.5">
                     — {{ sparte.beitrag_bezeichnung }}
                   </span>
-                  <span v-else class="text-primary-600 ml-1.5">Spartenbeitrag (extra)</span>
+                  <span v-else class="text-primary-600 ml-1.5">Zusatzbeitrag</span>
                 </div>
               </div>
 
@@ -181,7 +181,7 @@
                       </div>
                       <div>
                         <div class="font-semibold">{{ sparte.spartenleiter.vorname }} {{ sparte.spartenleiter.nachname }}</div>
-                        <div class="text-sm text-slate-500 mb-1">Spartenleiter</div>
+                        <div class="text-sm text-slate-500 mb-1">{{ verein.strukturLeitung }}</div>
                         <a v-if="sparte.spartenleiter.email" :href="`mailto:${sparte.spartenleiter.email}`"
                           class="text-sm text-primary-600 hover:underline">{{ sparte.spartenleiter.email }}</a>
                       </div>
@@ -254,6 +254,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useApi } from '@/utils/api'
+import { useVereinStore } from '@/stores/verein'
 import { X, MapPin, Mail, User, ArrowRight, Euro } from 'lucide-vue-next'
 
 const props = defineProps({
@@ -263,6 +264,7 @@ const props = defineProps({
 defineEmits(['close'])
 
 const api = useApi()
+const verein = useVereinStore()
 const sparte = ref(null)
 const loading = ref(false)
 const lightboxOpen = ref(false)
